@@ -21,5 +21,4 @@ struct DogHealthRecord: Codable {
     var consist: Consistency
     var consistComment: String
     var color: String
-    var colorComment: String
 }

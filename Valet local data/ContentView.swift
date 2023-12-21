@@ -12,8 +12,7 @@ struct ContentView: View {
         lastPoopedDateTime: Date(),
         consist: .regular,
         consistComment: "",
-        color: "",
-        colorComment: ""
+        color: ""
     )
     @State private var showingSaveConfirmation = false
     @State private var showingConsistencyAlert = false
@@ -39,7 +38,6 @@ struct ContentView: View {
                 }
 
                 TextField("Color", text: $dogHealthRecord.color)
-                TextField("Color Comment", text: $dogHealthRecord.colorComment)
 
                 Button("Save") {
                     saveToUserDefaults()
@@ -76,8 +74,7 @@ struct ContentView: View {
             lastPoopedDateTime: Date(),
             consist: .regular,
             consistComment: "",
-            color: "",
-            colorComment: ""
+            color: ""
         )
     }
 }

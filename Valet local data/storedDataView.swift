@@ -10,7 +10,6 @@ struct StoredDataView: View {
                 Text("Consistency: \(savedRecord.consist.rawValue)")
                 Text("Consistency Comment: \(savedRecord.consistComment)")
                 Text("Color: \(savedRecord.color)")
-                Text("Color Comment: \(savedRecord.colorComment)")
                 
             } else {
                 Text("No data saved")
