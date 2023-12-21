@@ -22,7 +22,4 @@ struct DogHealthRecord: Codable {
     var consistComment: String
     var color: String
     var colorComment: String
-    var eatenAmountPerHour: String
-    var brandName: String
-    var waterAmount: String
 }

@@ -16,10 +16,7 @@ struct ContentView: View {
         consist: .regular, // Default value
         consistComment: "",
         color: "",
-        colorComment: "",
-        eatenAmountPerHour: "",
-        brandName: "",
-        waterAmount: ""
+        colorComment: ""
     )
     @State private var showingSaveConfirmation = false
 
@@ -38,10 +35,6 @@ struct ContentView: View {
                 TextField("Consistency Comment", text: $dogHealthRecord.consistComment)
                 TextField("Color", text: $dogHealthRecord.color)
                 TextField("Color Comment", text: $dogHealthRecord.colorComment)
-                TextField("Eaten Amount per Hour", text: $dogHealthRecord.eatenAmountPerHour)
-                TextField("Brand Name", text: $dogHealthRecord.brandName)
-                TextField("Water Amount", text: $dogHealthRecord.waterAmount)
-
                 Button("Save") {
                     saveToUserDefaults()
                 }
@@ -71,10 +64,7 @@ struct ContentView: View {
             consist: .regular,
             consistComment: "",
             color: "",
-            colorComment: "",
-            eatenAmountPerHour: "",
-            brandName: "",
-            waterAmount: ""
+            colorComment: ""
         )
     }
 }
