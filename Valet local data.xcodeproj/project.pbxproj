@@ -11,6 +11,8 @@
 		1524AB522B34A8B200E6ED38 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524AB512B34A8B200E6ED38 /* ContentView.swift */; };
 		1524AB542B34A8B500E6ED38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1524AB532B34A8B500E6ED38 /* Assets.xcassets */; };
 		1524AB572B34A8B500E6ED38 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1524AB562B34A8B500E6ED38 /* Preview Assets.xcassets */; };
+		1524AB5E2B34AA4700E6ED38 /* localDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524AB5D2B34AA4700E6ED38 /* localDataStorage.swift */; };
+		1524AB602B34B11800E6ED38 /* storedDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524AB5F2B34B11800E6ED38 /* storedDataView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		1524AB512B34A8B200E6ED38 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1524AB532B34A8B500E6ED38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1524AB562B34A8B500E6ED38 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		1524AB5D2B34AA4700E6ED38 /* localDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = localDataStorage.swift; sourceTree = "<group>"; };
+		1524AB5F2B34B11800E6ED38 /* storedDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storedDataView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +57,8 @@
 			children = (
 				1524AB4F2B34A8B200E6ED38 /* Valet_local_dataApp.swift */,
 				1524AB512B34A8B200E6ED38 /* ContentView.swift */,
+				1524AB5D2B34AA4700E6ED38 /* localDataStorage.swift */,
+				1524AB5F2B34B11800E6ED38 /* storedDataView.swift */,
 				1524AB532B34A8B500E6ED38 /* Assets.xcassets */,
 				1524AB552B34A8B500E6ED38 /* Preview Content */,
 			);
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1524AB5E2B34AA4700E6ED38 /* localDataStorage.swift in Sources */,
+				1524AB602B34B11800E6ED38 /* storedDataView.swift in Sources */,
 				1524AB522B34A8B200E6ED38 /* ContentView.swift in Sources */,
 				1524AB502B34A8B200E6ED38 /* Valet_local_dataApp.swift in Sources */,
 			);
