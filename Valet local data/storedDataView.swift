@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUI
 
 import SwiftUI
 
@@ -12,9 +11,7 @@ struct StoredDataView: View {
                 Text("Consistency Comment: \(savedRecord.consistComment)")
                 Text("Color: \(savedRecord.color)")
                 Text("Color Comment: \(savedRecord.colorComment)")
-                Text("Eaten Amount per Hour: \(savedRecord.eatenAmountPerHour)")
-                Text("Brand Name: \(savedRecord.brandName)")
-                Text("Water Amount: \(savedRecord.waterAmount)")
+                
             } else {
                 Text("No data saved")
             }
