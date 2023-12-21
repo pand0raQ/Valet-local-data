@@ -8,12 +8,14 @@
 import Foundation
 import SwiftUI
 
+import SwiftUI
+
 struct StoredDataView: View {
     var body: some View {
         VStack {
             if let savedRecord = loadFromUserDefaults() {
                 Text("Last Pooped Time: \(savedRecord.lastPoopedDateTime, formatter: dateFormatter)")
-                Text("Consistency: \(savedRecord.consist)")
+                Text("Consistency: \(savedRecord.consist.rawValue)")
                 Text("Consistency Comment: \(savedRecord.consistComment)")
                 Text("Color: \(savedRecord.color)")
                 Text("Color Comment: \(savedRecord.colorComment)")

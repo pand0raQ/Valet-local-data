@@ -8,10 +8,12 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct ContentView: View {
     @State private var dogHealthRecord = DogHealthRecord(
         lastPoopedDateTime: Date(),
-        consist: "",
+        consist: .regular, // Default value
         consistComment: "",
         color: "",
         colorComment: "",
@@ -25,7 +27,14 @@ struct ContentView: View {
         NavigationView {
             Form {
                 DatePicker("Last Pooped Time", selection: $dogHealthRecord.lastPoopedDateTime)
-                TextField("Consistency", text: $dogHealthRecord.consist)
+
+                Picker("Consistency", selection: $dogHealthRecord.consist) {
+                    ForEach(Consistency.allCases, id: \.self) { value in
+                        Text(value.rawValue).tag(value)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+
                 TextField("Consistency Comment", text: $dogHealthRecord.consistComment)
                 TextField("Color", text: $dogHealthRecord.color)
                 TextField("Color Comment", text: $dogHealthRecord.colorComment)
@@ -59,7 +68,7 @@ struct ContentView: View {
     private func resetForm() {
         dogHealthRecord = DogHealthRecord(
             lastPoopedDateTime: Date(),
-            consist: "",
+            consist: .regular,
             consistComment: "",
             color: "",
             colorComment: "",

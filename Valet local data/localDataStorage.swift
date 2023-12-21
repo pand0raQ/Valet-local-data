@@ -7,9 +7,18 @@
 
 import Foundation
 
+// Define an enum for consistency options
+enum Consistency: String, CaseIterable, Codable {
+    case regular = "Regular"
+    case constipation = "Constipation"
+    case droopy = "Droopy"
+    case diarrhoea = "Diarrhoea"
+}
+
+// DogHealthRecord struct
 struct DogHealthRecord: Codable {
     var lastPoopedDateTime: Date
-    var consist: String
+    var consist: Consistency
     var consistComment: String
     var color: String
     var colorComment: String
@@ -17,5 +26,3 @@ struct DogHealthRecord: Codable {
     var brandName: String
     var waterAmount: String
 }
-
-// You can also include any local data storage related functions here in the future.
