@@ -1,8 +1,15 @@
+//
+//  poopingView.swift
+//  Valet local data
+//
+//  Created by Анастасия Степаносова on 24.12.2023.
+//
+
 import Foundation
 
 import SwiftUI
 
-struct StoredDataView: View {
+struct poopingView: View {
     var body: some View {
         VStack {
             if let savedRecord = loadFromUserDefaults() {
@@ -36,8 +43,8 @@ private let dateFormatter: DateFormatter = {
     return formatter
 }()
 
-struct StoredDataView_Previews: PreviewProvider {
+struct poopingView_Previews: PreviewProvider {
     static var previews: some View {
-        StoredDataView()
+        poopingView()
     }
 }
