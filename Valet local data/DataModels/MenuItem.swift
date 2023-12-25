@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
+
+struct MenuItem {
+    var title: String
+    var destination: AnyView
+}

@@ -11,8 +11,22 @@
 		1524AB522B34A8B200E6ED38 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524AB512B34A8B200E6ED38 /* ContentView.swift */; };
 		1524AB542B34A8B500E6ED38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1524AB532B34A8B500E6ED38 /* Assets.xcassets */; };
 		1524AB572B34A8B500E6ED38 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1524AB562B34A8B500E6ED38 /* Preview Assets.xcassets */; };
-		1524AB5E2B34AA4700E6ED38 /* localDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524AB5D2B34AA4700E6ED38 /* localDataStorage.swift */; };
-		1524AB602B34B11800E6ED38 /* storedDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524AB5F2B34B11800E6ED38 /* storedDataView.swift */; };
+		15A6F20B2B379C9100FB9DAA /* poopingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F20A2B379C9100FB9DAA /* poopingData.swift */; };
+		15A6F20F2B379D2600FB9DAA /* poopingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F20E2B379D2600FB9DAA /* poopingView.swift */; };
+		15A6F2112B379EDB00FB9DAA /* poopingStoredDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2102B379EDB00FB9DAA /* poopingStoredDataView.swift */; };
+		15A6F2132B37A15100FB9DAA /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2122B37A15000FB9DAA /* DashboardView.swift */; };
+		15A6F2152B37A1B000FB9DAA /* MenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2142B37A1B000FB9DAA /* MenuItem.swift */; };
+		15A6F2172B37A29600FB9DAA /* VomitingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2162B37A29600FB9DAA /* VomitingView.swift */; };
+		15A6F2192B37A2AB00FB9DAA /* AppetiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2182B37A2AB00FB9DAA /* AppetiteView.swift */; };
+		15A6F21B2B37A2B900FB9DAA /* MedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F21A2B37A2B900FB9DAA /* MedicationView.swift */; };
+		15A6F21D2B37A2C800FB9DAA /* AllergiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F21C2B37A2C800FB9DAA /* AllergiesView.swift */; };
+		15A6F21F2B37A2D900FB9DAA /* BitchcycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */; };
+		15A6F2212B37A2ED00FB9DAA /* GroomingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */; };
+		15A6F2232B37A2FD00FB9DAA /* BehaviourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2222B37A2FD00FB9DAA /* BehaviourView.swift */; };
+		15A6F2252B37A7BA00FB9DAA /* ImagePicker .swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2242B37A7BA00FB9DAA /* ImagePicker .swift */; };
+		15A6F2282B383CAE00FB9DAA /* DogAppetiteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2272B383CAE00FB9DAA /* DogAppetiteData.swift */; };
+		15A6F22A2B385C2D00FB9DAA /* DogMedicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2292B385C2D00FB9DAA /* DogMedicationData.swift */; };
+		15A6F22C2B386A7E00FB9DAA /* UIApplicationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F22B2B386A7E00FB9DAA /* UIApplicationDelegate.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,8 +35,23 @@
 		1524AB512B34A8B200E6ED38 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1524AB532B34A8B500E6ED38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1524AB562B34A8B500E6ED38 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		1524AB5D2B34AA4700E6ED38 /* localDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = localDataStorage.swift; sourceTree = "<group>"; };
-		1524AB5F2B34B11800E6ED38 /* storedDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = storedDataView.swift; sourceTree = "<group>"; };
+		15A6F20A2B379C9100FB9DAA /* poopingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = poopingData.swift; sourceTree = "<group>"; };
+		15A6F20E2B379D2600FB9DAA /* poopingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = poopingView.swift; sourceTree = "<group>"; };
+		15A6F2102B379EDB00FB9DAA /* poopingStoredDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = poopingStoredDataView.swift; sourceTree = "<group>"; };
+		15A6F2122B37A15000FB9DAA /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		15A6F2142B37A1B000FB9DAA /* MenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuItem.swift; sourceTree = "<group>"; };
+		15A6F2162B37A29600FB9DAA /* VomitingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VomitingView.swift; sourceTree = "<group>"; };
+		15A6F2182B37A2AB00FB9DAA /* AppetiteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppetiteView.swift; sourceTree = "<group>"; };
+		15A6F21A2B37A2B900FB9DAA /* MedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationView.swift; sourceTree = "<group>"; };
+		15A6F21C2B37A2C800FB9DAA /* AllergiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesView.swift; sourceTree = "<group>"; };
+		15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitchcycleView.swift; sourceTree = "<group>"; };
+		15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroomingView.swift; sourceTree = "<group>"; };
+		15A6F2222B37A2FD00FB9DAA /* BehaviourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviourView.swift; sourceTree = "<group>"; };
+		15A6F2242B37A7BA00FB9DAA /* ImagePicker .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePicker .swift"; sourceTree = "<group>"; };
+		15A6F2262B37A83300FB9DAA /* Valet-local-data-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Valet-local-data-Info.plist"; sourceTree = SOURCE_ROOT; };
+		15A6F2272B383CAE00FB9DAA /* DogAppetiteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogAppetiteData.swift; sourceTree = "<group>"; };
+		15A6F2292B385C2D00FB9DAA /* DogMedicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogMedicationData.swift; sourceTree = "<group>"; };
+		15A6F22B2B386A7E00FB9DAA /* UIApplicationDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationDelegate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +68,8 @@
 		1524AB432B34A8B200E6ED38 = {
 			isa = PBXGroup;
 			children = (
+				1524AB512B34A8B200E6ED38 /* ContentView.swift */,
+				1524AB4F2B34A8B200E6ED38 /* Valet_local_dataApp.swift */,
 				1524AB4E2B34A8B200E6ED38 /* Valet local data */,
 				1524AB4D2B34A8B200E6ED38 /* Products */,
 			);
@@ -55,12 +86,12 @@
 		1524AB4E2B34A8B200E6ED38 /* Valet local data */ = {
 			isa = PBXGroup;
 			children = (
-				1524AB4F2B34A8B200E6ED38 /* Valet_local_dataApp.swift */,
-				1524AB512B34A8B200E6ED38 /* ContentView.swift */,
-				1524AB5D2B34AA4700E6ED38 /* localDataStorage.swift */,
-				1524AB5F2B34B11800E6ED38 /* storedDataView.swift */,
+				15A6F2262B37A83300FB9DAA /* Valet-local-data-Info.plist */,
+				15A6F20D2B379CAD00FB9DAA /* Views */,
+				15A6F20C2B379C9900FB9DAA /* DataModels */,
 				1524AB532B34A8B500E6ED38 /* Assets.xcassets */,
 				1524AB552B34A8B500E6ED38 /* Preview Content */,
+				15A6F2242B37A7BA00FB9DAA /* ImagePicker .swift */,
 			);
 			path = "Valet local data";
 			sourceTree = "<group>";
@@ -71,6 +102,35 @@
 				1524AB562B34A8B500E6ED38 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		15A6F20C2B379C9900FB9DAA /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				15A6F20A2B379C9100FB9DAA /* poopingData.swift */,
+				15A6F2142B37A1B000FB9DAA /* MenuItem.swift */,
+				15A6F2272B383CAE00FB9DAA /* DogAppetiteData.swift */,
+				15A6F2292B385C2D00FB9DAA /* DogMedicationData.swift */,
+				15A6F22B2B386A7E00FB9DAA /* UIApplicationDelegate.swift */,
+			);
+			path = DataModels;
+			sourceTree = "<group>";
+		};
+		15A6F20D2B379CAD00FB9DAA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				15A6F2122B37A15000FB9DAA /* DashboardView.swift */,
+				15A6F20E2B379D2600FB9DAA /* poopingView.swift */,
+				15A6F2102B379EDB00FB9DAA /* poopingStoredDataView.swift */,
+				15A6F2162B37A29600FB9DAA /* VomitingView.swift */,
+				15A6F2182B37A2AB00FB9DAA /* AppetiteView.swift */,
+				15A6F21A2B37A2B900FB9DAA /* MedicationView.swift */,
+				15A6F21C2B37A2C800FB9DAA /* AllergiesView.swift */,
+				15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */,
+				15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */,
+				15A6F2222B37A2FD00FB9DAA /* BehaviourView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -143,10 +203,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1524AB5E2B34AA4700E6ED38 /* localDataStorage.swift in Sources */,
-				1524AB602B34B11800E6ED38 /* storedDataView.swift in Sources */,
+				15A6F2282B383CAE00FB9DAA /* DogAppetiteData.swift in Sources */,
+				15A6F21F2B37A2D900FB9DAA /* BitchcycleView.swift in Sources */,
+				15A6F2152B37A1B000FB9DAA /* MenuItem.swift in Sources */,
+				15A6F21B2B37A2B900FB9DAA /* MedicationView.swift in Sources */,
+				15A6F20B2B379C9100FB9DAA /* poopingData.swift in Sources */,
+				15A6F22C2B386A7E00FB9DAA /* UIApplicationDelegate.swift in Sources */,
+				15A6F22A2B385C2D00FB9DAA /* DogMedicationData.swift in Sources */,
+				15A6F2132B37A15100FB9DAA /* DashboardView.swift in Sources */,
+				15A6F21D2B37A2C800FB9DAA /* AllergiesView.swift in Sources */,
+				15A6F2232B37A2FD00FB9DAA /* BehaviourView.swift in Sources */,
+				15A6F20F2B379D2600FB9DAA /* poopingView.swift in Sources */,
+				15A6F2192B37A2AB00FB9DAA /* AppetiteView.swift in Sources */,
+				15A6F2252B37A7BA00FB9DAA /* ImagePicker .swift in Sources */,
+				15A6F2212B37A2ED00FB9DAA /* GroomingView.swift in Sources */,
 				1524AB522B34A8B200E6ED38 /* ContentView.swift in Sources */,
+				15A6F2172B37A29600FB9DAA /* VomitingView.swift in Sources */,
 				1524AB502B34A8B200E6ED38 /* Valet_local_dataApp.swift in Sources */,
+				15A6F2112B379EDB00FB9DAA /* poopingStoredDataView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,8 +354,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Valet local data/Preview Content\"";
+				DEVELOPMENT_TEAM = C77N4S9VR3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Valet-local-data-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -308,8 +389,15 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Valet local data/Preview Content\"";
+				DEVELOPMENT_TEAM = C77N4S9VR3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Valet-local-data-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
+				INFOPLIST_KEY_NSFileProviderDomainUsageDescription = "";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
