@@ -11,6 +11,9 @@
 		1524AB522B34A8B200E6ED38 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524AB512B34A8B200E6ED38 /* ContentView.swift */; };
 		1524AB542B34A8B500E6ED38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1524AB532B34A8B500E6ED38 /* Assets.xcassets */; };
 		1524AB572B34A8B500E6ED38 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1524AB562B34A8B500E6ED38 /* Preview Assets.xcassets */; };
+		158E49EB2B39DA9500681298 /* ImagePickerAllergy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158E49EA2B39DA9500681298 /* ImagePickerAllergy.swift */; };
+		158E49ED2B3A181500681298 /* BehaviorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158E49EC2B3A181500681298 /* BehaviorView.swift */; };
+		158E49EF2B3A20EB00681298 /* SavedResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158E49EE2B3A20EB00681298 /* SavedResultsView.swift */; };
 		15A6F20B2B379C9100FB9DAA /* poopingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F20A2B379C9100FB9DAA /* poopingData.swift */; };
 		15A6F20F2B379D2600FB9DAA /* poopingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F20E2B379D2600FB9DAA /* poopingView.swift */; };
 		15A6F2112B379EDB00FB9DAA /* poopingStoredDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2102B379EDB00FB9DAA /* poopingStoredDataView.swift */; };
@@ -22,7 +25,6 @@
 		15A6F21D2B37A2C800FB9DAA /* AllergiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F21C2B37A2C800FB9DAA /* AllergiesView.swift */; };
 		15A6F21F2B37A2D900FB9DAA /* BitchcycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */; };
 		15A6F2212B37A2ED00FB9DAA /* GroomingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */; };
-		15A6F2232B37A2FD00FB9DAA /* BehaviourView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2222B37A2FD00FB9DAA /* BehaviourView.swift */; };
 		15A6F2252B37A7BA00FB9DAA /* ImagePicker .swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2242B37A7BA00FB9DAA /* ImagePicker .swift */; };
 		15A6F2282B383CAE00FB9DAA /* DogAppetiteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2272B383CAE00FB9DAA /* DogAppetiteData.swift */; };
 		15A6F22A2B385C2D00FB9DAA /* DogMedicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2292B385C2D00FB9DAA /* DogMedicationData.swift */; };
@@ -35,6 +37,9 @@
 		1524AB512B34A8B200E6ED38 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		1524AB532B34A8B500E6ED38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1524AB562B34A8B500E6ED38 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		158E49EA2B39DA9500681298 /* ImagePickerAllergy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerAllergy.swift; sourceTree = "<group>"; };
+		158E49EC2B3A181500681298 /* BehaviorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorView.swift; sourceTree = "<group>"; };
+		158E49EE2B3A20EB00681298 /* SavedResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedResultsView.swift; sourceTree = "<group>"; };
 		15A6F20A2B379C9100FB9DAA /* poopingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = poopingData.swift; sourceTree = "<group>"; };
 		15A6F20E2B379D2600FB9DAA /* poopingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = poopingView.swift; sourceTree = "<group>"; };
 		15A6F2102B379EDB00FB9DAA /* poopingStoredDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = poopingStoredDataView.swift; sourceTree = "<group>"; };
@@ -46,7 +51,6 @@
 		15A6F21C2B37A2C800FB9DAA /* AllergiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesView.swift; sourceTree = "<group>"; };
 		15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitchcycleView.swift; sourceTree = "<group>"; };
 		15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroomingView.swift; sourceTree = "<group>"; };
-		15A6F2222B37A2FD00FB9DAA /* BehaviourView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviourView.swift; sourceTree = "<group>"; };
 		15A6F2242B37A7BA00FB9DAA /* ImagePicker .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePicker .swift"; sourceTree = "<group>"; };
 		15A6F2262B37A83300FB9DAA /* Valet-local-data-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Valet-local-data-Info.plist"; sourceTree = SOURCE_ROOT; };
 		15A6F2272B383CAE00FB9DAA /* DogAppetiteData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogAppetiteData.swift; sourceTree = "<group>"; };
@@ -92,6 +96,7 @@
 				1524AB532B34A8B500E6ED38 /* Assets.xcassets */,
 				1524AB552B34A8B500E6ED38 /* Preview Content */,
 				15A6F2242B37A7BA00FB9DAA /* ImagePicker .swift */,
+				158E49EA2B39DA9500681298 /* ImagePickerAllergy.swift */,
 			);
 			path = "Valet local data";
 			sourceTree = "<group>";
@@ -128,7 +133,8 @@
 				15A6F21C2B37A2C800FB9DAA /* AllergiesView.swift */,
 				15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */,
 				15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */,
-				15A6F2222B37A2FD00FB9DAA /* BehaviourView.swift */,
+				158E49EC2B3A181500681298 /* BehaviorView.swift */,
+				158E49EE2B3A20EB00681298 /* SavedResultsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -212,9 +218,11 @@
 				15A6F22A2B385C2D00FB9DAA /* DogMedicationData.swift in Sources */,
 				15A6F2132B37A15100FB9DAA /* DashboardView.swift in Sources */,
 				15A6F21D2B37A2C800FB9DAA /* AllergiesView.swift in Sources */,
-				15A6F2232B37A2FD00FB9DAA /* BehaviourView.swift in Sources */,
+				158E49EF2B3A20EB00681298 /* SavedResultsView.swift in Sources */,
 				15A6F20F2B379D2600FB9DAA /* poopingView.swift in Sources */,
+				158E49ED2B3A181500681298 /* BehaviorView.swift in Sources */,
 				15A6F2192B37A2AB00FB9DAA /* AppetiteView.swift in Sources */,
+				158E49EB2B39DA9500681298 /* ImagePickerAllergy.swift in Sources */,
 				15A6F2252B37A7BA00FB9DAA /* ImagePicker .swift in Sources */,
 				15A6F2212B37A2ED00FB9DAA /* GroomingView.swift in Sources */,
 				1524AB522B34A8B200E6ED38 /* ContentView.swift in Sources */,

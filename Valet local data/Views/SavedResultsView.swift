@@ -8,11 +8,39 @@
 import SwiftUI
 
 struct SavedResultsView: View {
+    private var behaviorData: [String: Any]
+
+    init() {
+        behaviorData = UserDefaults.standard.object(forKey: "DogBehaviorData") as? [String: Any] ?? [:]
+    }
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List(behaviorData.sorted(by: { $0.key < $1.key }), id: \.key) { key, value in
+                VStack(alignment: .leading) {
+                    Text(key.replacingOccurrences(of: "_", with: " "))
+                        .font(.headline)
+                    Text("Value: \(stringify(value))")
+                        .font(.subheadline)
+                }
+            }
+            .navigationBarTitle("Saved Behavior Results")
+        }
+    }
+
+    private func stringify(_ value: Any) -> String {
+        if let intValue = value as? Int {
+            return String(intValue)
+        } else if let stringValue = value as? String {
+            return stringValue
+        } else {
+            return "\(value)"
+        }
     }
 }
 
-#Preview {
-    SavedResultsView()
+struct SavedResultsView_Previews: PreviewProvider {
+    static var previews: some View {
+        SavedResultsView()
+    }
 }

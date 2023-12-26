@@ -14,9 +14,8 @@ struct DashboardView: View {
         MenuItem(title: "Appetite", destination: AnyView(AppetiteView())),
         MenuItem(title: "Medication", destination: AnyView(MedicationView())),
         MenuItem(title: "Allergies", destination: AnyView(AllergiesView())),
-        MenuItem(title: "Bitch cycle", destination: AnyView(BitchcycleView())),
         MenuItem(title: "Grooming", destination: AnyView(GroomingView())),
-        MenuItem(title: "Behaviour", destination: AnyView(BehaviourView())),
+       MenuItem(title: "Behaviour", destination: AnyView(BehaviorView())),
     ]
 
     var body: some View {
