@@ -139,3 +139,9 @@ extension DateFormatter {
         return formatter
     }()
 }
+
+struct AllergiesView_Previews: PreviewProvider {
+    static var previews: some View {
+        AllergiesView()
+    }
+}

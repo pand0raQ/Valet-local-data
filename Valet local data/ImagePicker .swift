@@ -9,6 +9,7 @@ struct ImagePicker: UIViewControllerRepresentable {
     var sourceType: SourceType
     @Environment(\.presentationMode) var presentationMode
     @Binding var image: UIImage?
+    var onDismiss: () -> Void  // Closure for custom dismissal
 
     func makeUIViewController(context: Context) -> UIImagePickerController {
         let picker = UIImagePickerController()
@@ -20,14 +21,16 @@ struct ImagePicker: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self)
+        Coordinator(self, onDismiss: onDismiss)
     }
 
     class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
         let parent: ImagePicker
+        var onDismiss: () -> Void  // Closure for custom dismissal
 
-        init(_ parent: ImagePicker) {
+        init(_ parent: ImagePicker, onDismiss: @escaping () -> Void) {
             self.parent = parent
+            self.onDismiss = onDismiss
         }
 
         func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -36,6 +39,12 @@ struct ImagePicker: UIViewControllerRepresentable {
             }
 
             parent.presentationMode.wrappedValue.dismiss()
+            onDismiss()  // Call the dismissal closure
+        }
+
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.presentationMode.wrappedValue.dismiss()
+            onDismiss()  // Call the dismissal closure
         }
     }
 }

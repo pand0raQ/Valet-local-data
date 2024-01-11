@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-
 struct AppetiteView: View {
     @State private var appetiteRecord = DogAppetiteRecord()
     @State private var showingSaveConfirmation = false
@@ -16,26 +15,27 @@ struct AppetiteView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Food Intake")) {
+                Section(header: Text("Food given")) {
                     TextField("Amount of Food (mg)", text: $appetiteRecord.foodAmount)
                     TextField("Brand of Dog Food", text: $appetiteRecord.foodBrand)
                 }
                 
-                Section(header: Text("Water Intake")) {
+                Section(header: Text("Water given")) {
                     TextField("Amount of Water (ml)", text: $appetiteRecord.waterIntake)
                 }
                 
-                Button("Save") {
-                    saveAppetiteRecord()
-                }
-                
-                if let lastRecord = lastRecordedAppetite {
-                    Section(header: Text("Last Recorded Data")) {
-                        Text("Food: \(lastRecord.foodAmount) mg")
-                        Text("Brand: \(lastRecord.foodBrand)")
-                        Text("Water: \(lastRecord.waterIntake) ml")
+                HStack {
+                    Spacer() // Spacer before the button for centering
+                    Button("Save") {
+                        saveAppetiteRecord()
                     }
+                    .buttonStyle(.borderedProminent) // Bordered and prominent style
+                    .tint(.green) // Green color
+                    Spacer() // Spacer after the button for centering
                 }
+               // .padding(.vertical) // Add vertical padding for spacing
+                
+      
             }
             .navigationBarTitle("Appetite Tracking")
             .onAppear(perform: loadLastRecordedData)

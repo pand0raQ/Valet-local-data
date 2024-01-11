@@ -5,14 +5,9 @@
 //  Created by Анастасия Степаносова on 03.01.2024.
 //
 
-import SwiftUI
+import Foundation
 
-struct vomitingData: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+struct VomitingData: Codable {
+    var lastVomitDateTime: Date
 }
 
-#Preview {
-    vomitingData()
-}

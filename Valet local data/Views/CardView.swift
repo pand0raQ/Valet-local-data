@@ -1,18 +1,25 @@
-//
-//  CardView.swift
-//  Valet local data
-//
-//  Created by Анастасия Степаносова on 30.12.2023.
-//
+
+// CardView.swift
 
 import SwiftUI
 
 struct CardView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
+    @Binding var card: CardData
 
-#Preview {
-    CardView()
+    var body: some View {
+        VStack {
+            Text(card.title)
+                .font(.headline)
+            if card.isExpanded {
+                Text(card.details)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
+        .background(Color.gray.opacity(0.2))
+        .cornerRadius(10)
+        .onTapGesture {
+            card.isExpanded.toggle()
+        }
+    }
 }

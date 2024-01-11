@@ -15,8 +15,8 @@ enum Consistency: String, CaseIterable, Codable {
     case diarrhoea = "Diarrhoea"
 }
 
-// DogHealthRecord struct
-struct DogHealthRecord: Codable {
+// PoopingData struct
+struct PoopingData: Codable {
     var lastPoopedDateTime: Date
     var consist: Consistency
     var consistComment: String

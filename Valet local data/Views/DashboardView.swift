@@ -1,45 +1,69 @@
-//
-//  DashboardView.swift
-//  Valet local data
-//
-//  Created by Анастасия Степаносова on 24.12.2023.
-//
 
 import SwiftUI
 
 struct DashboardView: View {
-    let menuItems: [MenuItem] = [
-        MenuItem(title: "Pooping", destination: AnyView(poopingView())),
-        MenuItem(title: "Vomiting", destination: AnyView(VomitingView())),
-        MenuItem(title: "Appetite", destination: AnyView(AppetiteView())),
-        MenuItem(title: "Medication", destination: AnyView(MedicationView())),
-        MenuItem(title: "Allergies", destination: AnyView(AllergiesView())),
-        MenuItem(title: "Grooming", destination: AnyView(GroomingView())),
-       MenuItem(title: "Behaviour", destination: AnyView(BehaviorView())),
-    ]
-
+    @Binding var medications: [AppModels.DogMedicationRecord]
+    
+    @State private var showingFilterSheet = false
+    @State private var selectedMenuItems: Set<String> = []
+    @State private var selectedView: String?  // State to track the selected view for navigation
+    let allMenuItems = MenuDataModel.allMenuItems
+    
+    var filteredMenuItems: [MenuItem] {
+        selectedMenuItems.isEmpty ? allMenuItems : allMenuItems.filter { selectedMenuItems.contains($0.title) }
+    }
+    
     var body: some View {
-        ScrollView {
-            VStack(spacing: 20) {
-                ForEach(menuItems, id: \.title) { item in
-                    NavigationLink(destination: item.destination) {
-                        Text(item.title)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.blue)
-                            .foregroundColor(.white)
-                            .cornerRadius(25)
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 20) {
+                    ForEach(filteredMenuItems, id: \.id) { item in
+                        itemView(for: item)
+                            .onTapGesture {
+                                selectedView = item.title
+                            }
                     }
                 }
+                .padding()
             }
-            .padding()
+            .navigationTitle("Dashboard")
+            .navigationBarItems(trailing: Button(action: {
+                showingFilterSheet = true
+            }) {
+                Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                    .font(.system(size: 28))
+            })
+            .sheet(isPresented: $showingFilterSheet) {
+                MenuSelectionView(selectedMenuItems: $selectedMenuItems, allMenuItems: allMenuItems)
+            }
         }
-        .navigationTitle("Dashboard")
+                   .onChange(of: selectedView) { newValue in
+                    // Handle navigation based on the selected view
+                    // For example, present a view modally or push onto a navigation stack
+                }
+            
+        }
+        
+        
+        @ViewBuilder
+        private func itemView(for menuItem: MenuItem) -> some View {
+            switch menuItem.title {
+            case "Pooping Log":
+                PoopingCardView()
+            case "Vomiting Log":
+                VomitingCardView()
+            case "Appetite Log":
+                AppetiteCardView()
+            case "Medication Log":
+                MedicationCardView(medications: $medications)
+                
+                // Add other cases as needed
+            default:
+                EmptyView()
+            }
+        }
     }
-}
+    
 
-struct DashboardView_Previews: PreviewProvider {
-    static var previews: some View {
-        DashboardView()
-    }
-}
+// Implement the PoopingCardView, VomitingCardView, and MenuSelectionView as per your app's requirements.
+
