@@ -19,9 +19,8 @@ struct MedicationCardView: View {
                     if let nextEvent = nextMedicationEvent {
                         Text("Next Medication: \(nextEvent.medicationName)")
                         Text("Dosage: \(nextEvent.dosage)")
-                        if isExpanded {
-                            Text("Scheduled: \(nextEvent.date, formatter: dateFormatter)")
-                        }
+                        Text("Scheduled: \(nextEvent.date, formatter: dateFormatter)")
+                       
                     } else {
                         Text("No upcoming medication")
                     }
@@ -31,7 +30,7 @@ struct MedicationCardView: View {
                 // Checklist Button
                                 Button(action: {
                                     // navigateToScheduledNotificationsView = true
-                                     navigateToTimelineView = true
+                                    navigateToScheduledNotificationsView = true
 
                                     withAnimation(Animation.easeInOut(duration: 0.3).repeatCount(3, autoreverses: true)) {
                                         isAnimating = true
@@ -60,21 +59,14 @@ struct MedicationCardView: View {
                     
             }
             
-            Button(action: {
-                withAnimation {
-                    isExpanded.toggle()
-                }
-            }) {
-                Text(isExpanded ? "Show Less" : "Show More")
-            }
             .padding(.top, 8)
             
             NavigationLink(destination: MedicationView(), isActive: $navigateToMedicationView) {
                 EmptyView()
             }
-            NavigationLink(destination: ScheduledMedicationsTimelineView(medications: $medications), isActive: $navigateToTimelineView) {
-                       EmptyView()
-                   }
+//            NavigationLink(destination: ScheduledMedicationsTimelineView(medications: $medications), isActive: $navigateToTimelineView) {
+//                       EmptyView()
+//                   }
             NavigationLink(destination: ScheduledNotificationsView(medications: $medications), isActive: $navigateToScheduledNotificationsView) {
                           EmptyView()
                       }
@@ -87,48 +79,75 @@ struct MedicationCardView: View {
         .padding()
         
         .onAppear {
-                    loadMedications()
+            loadMedications()
+            printMedicationDetails(medications)
+
                 }
     }
 
     private func getNextMedicationEvent() -> (medicationName: String, dosage: String, date: Date)? {
         let now = Date()
-        print("Current Date and Time: \(now)")
-        print("Medications Array: \(medications)")
-
         let upcomingEvents = medications.flatMap { medication -> [(String, String, Date)] in
-            print("Checking medication: \(medication.medicationName)")
-
-            let dailyEvents: [(String, String, Date)] = medication.dailyTimes?.compactMap { time in
-                print("Daily time: \(time.date) for \(medication.medicationName)")
-                return (medication.medicationName, medication.dosage, time.date)
-            } ?? []
-
-            let irregularEvents: [(String, String, Date)] = medication.irregularTimes?.compactMap { time in
-                print("Irregular time: \(time.date) for \(medication.medicationName)")
-                return (medication.medicationName, medication.dosage, time.date)
-            } ?? []
-
-            return dailyEvents + irregularEvents
+            let times = (medication.dailyTimes ?? []) + (medication.irregularTimes ?? [])
+            return times.compactMap { time in
+                time.date > now ? (medication.medicationName, medication.dosage, time.date) : nil
+            }
         }
-        .filter { eventDate in
-            print("Evaluating Event: \(eventDate)")
-            return eventDate.2 > now
-        }
-        .min(by: { $0.2 < $1.2 })
+        .filter { $0.2 > now }
+        .sorted { $0.2 < $1.2 }
 
-        print("Next Medication Event: \(String(describing: upcomingEvents))")
-        return upcomingEvents
+        return upcomingEvents.first
     }
 
+
     private func loadMedications() {
-        if let savedData = UserDefaults.standard.data(forKey: "SavedMedications") {
-            let decoder = JSONDecoder()
-            if let loadedMedications = try? decoder.decode([AppModels.DogMedicationRecord].self, from: savedData) {
-                self.medications = loadedMedications
+        if let savedItems = UserDefaults.standard.data(forKey: "SavedMedications") {
+            do {
+                let decodedItems = try JSONDecoder().decode([AppModels.DogMedicationRecord].self, from: savedItems)
+                medications = decodedItems
+                print("Loaded medications: \(medications)")
+
+                // Debug print for daily and irregular times
+                for medication in medications {
+                    print("Medication: \(medication.medicationName), Dosage: \(medication.dosage)")
+
+                    if let dailyTimes = medication.dailyTimes {
+                        for time in dailyTimes {
+                            print("Encoding NotificationTime - ID: \(time.timeId), Date: \(time.date)")
+
+                            print("Daily time: \(time.date) for \(medication.medicationName)")
+                        }
+                    }
+
+                    if let irregularTimes = medication.irregularTimes {
+                        for time in irregularTimes {
+                            print("Irregular time: \(time.date) for \(medication.medicationName)")
+                        }
+                    }
+                }
+            } catch {
+                print("Error loading medications: \(error)")
+            }
+        } else {
+            print("No saved medications data found.")
+        }
+    }
+    
+    func printMedicationDetails(_ medications: [AppModels.DogMedicationRecord]) {
+        for medication in medications {
+            print("Medication Name: \(medication.medicationName)")
+            print("Dosage: \(medication.dosage)")
+            print("Daily Times:")
+            medication.dailyTimes?.forEach { dailyTime in
+                print("  Date: \(dailyTime.date), Administered: \(dailyTime.administered)")
+            }
+            print("Irregular Times:")
+            medication.irregularTimes?.forEach { irregularTime in
+                print("  Date: \(irregularTime.date), Administered: \(irregularTime.administered)")
             }
         }
     }
+   
 
 
     private let dateFormatter: DateFormatter = {

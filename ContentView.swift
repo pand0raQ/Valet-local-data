@@ -21,28 +21,44 @@ struct ContentView: View {
         }
         .onAppear {
             loadMedications()
+            
         }
     }
     
     
     private func loadMedications() {
-        let defaults = UserDefaults.standard
-        
-        if let savedData = defaults.data(forKey: "SavedMedications") {
-            let decoder = JSONDecoder()
-            
+        if let savedItems = UserDefaults.standard.data(forKey: "SavedMedications") {
             do {
-                let loadedMedications = try decoder.decode([AppModels.DogMedicationRecord].self, from: savedData)
-                self.medications = loadedMedications
-                print("Loaded medications: \(loadedMedications)")
+                let decodedItems = try JSONDecoder().decode([AppModels.DogMedicationRecord].self, from: savedItems)
+                medications = decodedItems
+                print("Loaded medications: \(medications)")
+
+                // Debug print for daily and irregular times
+                for medication in medications {
+                    print("Medication: \(medication.medicationName), Dosage: \(medication.dosage)")
+
+                    if let dailyTimes = medication.dailyTimes {
+                        for time in dailyTimes {
+                            print("Daily time: \(time.date) for \(medication.medicationName)")
+                        }
+                    }
+
+                    if let irregularTimes = medication.irregularTimes {
+                        for time in irregularTimes {
+                            print("Irregular time: \(time.date) for \(medication.medicationName)")
+                        }
+                    }
+                }
             } catch {
-                print("Failed to load medications: \(error)")
+                print("Error loading medications: \(error)")
             }
         } else {
             print("No saved medications data found.")
-            // Optionally load default or mock data for testing
         }
     }
+    
+    
+
 }
 
 

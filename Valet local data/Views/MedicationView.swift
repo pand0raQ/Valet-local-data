@@ -15,6 +15,8 @@ struct MedicationView: View {
     @State private var showingIrregularScheduleSuccessAlert = false
     @State private var activeAlert: ActiveAlert?
     @State private var isAnimating: Bool = false
+    @State private var forceUpdate: Bool = false // Dummy state variable to force update
+
     
     enum ActiveAlert: Identifiable {
         case dailyScheduleSuccess, irregularScheduleSuccess
@@ -49,8 +51,23 @@ struct MedicationView: View {
         }
     }
     
+    private func bindingForDatePicker(at index: Int) -> Binding<Date> {
+        Binding<Date>(
+            get: {
+                self.irregularDates[index].date
+            },
+            set: { newDate in
+                print("Selected new date: \(newDate)")
+                self.irregularDates[index].date = newDate
+                self.forceUpdate.toggle()  // Toggle the forceUpdate to refresh the view
+            }
+        )
+    }
+
     
     var body: some View {
+        if forceUpdate { EmptyView() }
+
         NavigationView {
             List {
                 Section(header: Text("Medication Info")) {
@@ -81,7 +98,7 @@ struct MedicationView: View {
                                     get: { self.selectedTimes[index].date },
                                     set: { newDate in
                                         self.selectedTimes[index].date = newDate
-                                        self.selectedTimes[index].id = UUID() // Update the identifier if necessary
+                                        self.selectedTimes[index].timeId = UUID() // Update the identifier if necessary
                                     }
                                 ),
                                 displayedComponents: .hourAndMinute
@@ -106,28 +123,24 @@ struct MedicationView: View {
                         
                         
                         Button("Schedule Daily Notifications", action: {
-                            print("Selected Times for Daily Notifications: \(selectedTimes)")
-                            updateSelectedTimes()
-                            print("Updated Times for Daily Notifications: \(selectedTimes)")
+                          //  print("Selected Times for Daily Notifications: \(selectedTimes)")
+                           // updateSelectedTimes()
+                          //  print("Updated Times for Daily Notifications: \(selectedTimes)")
                             scheduleDailyNotifications()
                         })
                         
                         
                         
                     } else {
-                        ForEach(irregularDates.indices, id: \.self) { index in
-                            DatePicker(
-                                "Select Date \(index + 1)",
-                                selection: Binding(
-                                    get: { self.irregularDates[index].date },
-                                    set: { newDate in
-                                        self.irregularDates[index].date = newDate
-                                        self.irregularDates[index].id = UUID() // Update the identifier if necessary
-                                    }
-                                ),
-                                displayedComponents: [.date]
-                            )
-                            .datePickerStyle(GraphicalDatePickerStyle())
+                        if scheduleType == "Irregular Schedule" {
+                            ForEach(irregularDates.indices, id: \.self) { index in
+                                DatePicker(
+                                    "Select Date \(index + 1)",
+                                    selection: bindingForDatePicker(at: index),
+                                    displayedComponents: [.date]
+                                )
+                                .datePickerStyle(GraphicalDatePickerStyle())
+                            }
                         }
                         
                         
@@ -144,6 +157,8 @@ struct MedicationView: View {
                                 selection: Binding(
                                     get: { self.selectedTimes[index].date },
                                     set: { newDate in
+                                        print("Selected new time: \(newDate)")
+
                                         self.selectedTimes[index].date = newDate
                                     }
                                 ),
@@ -215,119 +230,109 @@ struct MedicationView: View {
     private func addTime() {
         selectedTimes.append(AppModels.NotificationTime(date: Date()))
     }
-    private func scheduleTestNotification() {
-        let content = UNMutableNotificationContent()
-        content.title = "Test Notification"
-        content.body = "This is a test notification."
-        content.sound = UNNotificationSound.default
-        
-        // Schedule this notification to fire in 2 minutes
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 60, repeats: false)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-        
-        UNUserNotificationCenter.current().add(request) { error in
-            if let error = error {
-                print("Error scheduling test notification: \(error)")
-            } else {
-                print("Test notification scheduled successfully.")
-            }
-        }
-        resetForm()
-        
-    }
     
     private func scheduleDailyNotifications() {
-        print("Starting to schedule daily notifications")
+        // Create a medication record
+        let medicationRecord = createMedicationRecord()
 
-        // Adding medication
-        print("Adding medication")
-        addMedication()
-
-        // Saving medication
-        print("Saving medications")
-        saveMedications()
-
+        // Request notification permissions
         let notificationCenter = UNUserNotificationCenter.current()
-
-        // Request permission to send notifications
         notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-            if granted {
-                // Schedule notifications if permission is granted
-                print("Permission granted for notifications. Proceeding to schedule notifications.")
-                self.scheduleNotifications(notificationCenter: notificationCenter)
-                
-                DispatchQueue.main.async {
-                    print("Setting showingDailyScheduleSuccessAlert to true")
-                    self.activeAlert = .dailyScheduleSuccess
-                }
-                
-            } else if let error = error {
-                // Handle the error case
-                print("Error requesting notification authorization: \(error)")
+            guard granted, error == nil else {
+                // Handle error or denial of permission
+                return
+            }
+
+            // Schedule notifications for each time in the medication record's daily times
+            medicationRecord.dailyTimes?.forEach { time in
+                let identifier = self.scheduleNotification(for: time, with: notificationCenter)
+                time.identifier = identifier // Update the identifier of the time
+            }
+
+            // Append the new medication record to the medications array and save
+            DispatchQueue.main.async {
+                self.medications.append(medicationRecord)
+                self.saveMedications()
+            }
+        }
+    }
+
+    private func scheduleNotification(for time: AppModels.NotificationTime, with notificationCenter: UNUserNotificationCenter) -> String {
+        let identifier =  time.timeId.uuidString
+
+        let content = UNMutableNotificationContent()
+        content.title = "Medication Reminder"
+        content.body = "Time to take your medication: \(self.medicationName), \(self.dosage)"
+        content.sound = UNNotificationSound.default
+
+        let triggerDateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: time.date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDateComponents, repeats: false)
+
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        notificationCenter.add(request) { error in
+            if let error = error {
+                print("Error scheduling notification: \(error)")
             } else {
-                print("Notification permission denied")
+                print("Added notification request with ID: \(time.identifier)")
+
             }
         }
-    }
-    
-    
-    private func scheduleNotifications(notificationCenter: UNUserNotificationCenter) {
-        print("Starting to schedule notifications")
 
-        // Ensure there's a last medication to update
-        guard let lastMedicationIndex = medications.indices.last else {
-            print("No medication to schedule notifications for")
-            return
+        return identifier
+    }
+
+
+
+    private func createMedicationRecord() -> AppModels.DogMedicationRecord {
+        let medicationName = self.medicationName
+        let dosage = self.dosage
+        let scheduleType = self.scheduleType // Use the state variable
+        let durationInWeeks = self.durationInWeeks
+
+        var allNotificationTimes = [AppModels.NotificationTime]()
+
+        // Generate daily times for each selected time
+        for selectedTime in selectedTimes {
+            let dailyTimes = createDailyTimes(startingFrom: Date(), for: durationInWeeks ?? 0, at: selectedTime.date)
+            allNotificationTimes.append(contentsOf: dailyTimes)
         }
 
-        for (index, notificationTime) in selectedTimes.enumerated() {
-            print("Processing index: \(index)")
+        return AppModels.DogMedicationRecord(
+            medicationName: medicationName,
+            dosage: dosage,
+            scheduleType: scheduleType,
+            durationInWeeks: durationInWeeks,
+            dailyTimes: allNotificationTimes, // Pass the generated daily times here
+            irregularTimes: nil
+        )
+    }
 
-            let time = notificationTime.date // Access the Date object from NotificationTime
-            let content = UNMutableNotificationContent()
-            content.title = "Medication Reminder"
-            content.body = "Time to take your medication: \(medicationName), \(dosage)"
-            content.sound = UNNotificationSound.default
 
-            for week in 0..<durationInWeeks {
-                guard let triggerDate = Calendar.current.date(byAdding: .weekOfYear, value: week, to: time) else {
-                    print("Failed to calculate trigger date")
-                    continue
-                }
-                let triggerComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: triggerDate)
-                print("Calculated trigger date for time index \(index) and week \(week): \(triggerDate)")
 
-                let notificationIdentifier = UUID().uuidString
-                let trigger = UNCalendarNotificationTrigger(dateMatching: triggerComponents, repeats: false)
-                let request = UNNotificationRequest(identifier: notificationIdentifier, content: content, trigger: trigger)
-                notificationCenter.add(request) { error in
-                    if let error = error {
-                        print("Error scheduling notification: \(error)")
-                    } else {
-                        print("Notification scheduled successfully with identifier \(notificationIdentifier)")
-                    }
-                }
+    private func createDailyTimes(startingFrom startDate: Date, for durationInWeeks: Int, at time: Date) -> [AppModels.NotificationTime] {
+        var times = [AppModels.NotificationTime]()
+        let calendar = Calendar.current
+        let numberOfDays = durationInWeeks * 7
 
-                let updatedNotificationTime = AppModels.NotificationTime(date: time, identifier: notificationIdentifier)
-                if scheduleType == "Daily" {
-                    if index < (medications[lastMedicationIndex].dailyTimes?.count ?? 0) {
-                        medications[lastMedicationIndex].dailyTimes?[index] = updatedNotificationTime
-                    } else {
-                        medications[lastMedicationIndex].dailyTimes?.append(updatedNotificationTime)
-                    }
-                } else {
-                    if index < (medications[lastMedicationIndex].irregularTimes?.count ?? 0) {
-                        medications[lastMedicationIndex].irregularTimes?[index] = updatedNotificationTime
-                    } else {
-                        medications[lastMedicationIndex].irregularTimes?.append(updatedNotificationTime)
-                    }
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+
+        for day in 0..<numberOfDays {
+            if let dayDate = calendar.date(byAdding: .day, value: day, to: startDate) {
+                var dateTimeComponents = calendar.dateComponents([.year, .month, .day], from: dayDate)
+                dateTimeComponents.hour = timeComponents.hour
+                dateTimeComponents.minute = timeComponents.minute
+
+                if let dateTime = calendar.date(from: dateTimeComponents) {
+                    let notificationTime = AppModels.NotificationTime(date: dateTime)
+                    times.append(notificationTime)
                 }
             }
         }
 
-        saveMedications() // Save after updating all identifiers
-        resetForm()
+        return times
     }
+
+
 
 
 
@@ -382,7 +387,7 @@ struct MedicationView: View {
             let triggerDateComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: combinedDateTime)
             let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDateComponents, repeats: false)
 
-            let request = UNNotificationRequest(identifier: notificationIdentifier, content: content, trigger: trigger)
+            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
             notificationCenter.add(request) { error in
                 if let error = error {
                     print("Error scheduling irregular notification: \(error)")
@@ -410,56 +415,52 @@ struct MedicationView: View {
 
     private func combineDateAndTime(date: Date, time: Date) -> Date? {
         let calendar = Calendar.current
-        let hour = calendar.component(.hour, from: time)
-        let minute = calendar.component(.minute, from: time)
-
-        return calendar.date(bySettingHour: hour, minute: minute, second: 0, of: date)
+        let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: time)
+        return calendar.date(from: DateComponents(year: dateComponents.year, month: dateComponents.month, day: dateComponents.day, hour: timeComponents.hour, minute: timeComponents.minute))
     }
 
 
-
-
-
-
-
-    
-    
-    
-    
-
     private func addMedication() {
         var newMedication: AppModels.DogMedicationRecord
-
+        
         if scheduleType == "Daily" {
-            newMedication = AppModels.DogMedicationRecord(
-                medicationName: medicationName,
-                dosage: dosage,
-                scheduleType: scheduleType,
-                durationInWeeks: durationInWeeks,
-                dailyTimes: selectedTimes as? [AppModels.NotificationTime], // Casting to namespaced type
-                irregularTimes: nil
-            )
+            if let specificTime = selectedTimes.first?.date  {
+                // specificTime is unwrapped safely here
+                newMedication = AppModels.DogMedicationRecord(
+                    medicationName: medicationName,
+                    dosage: dosage,
+                    scheduleType: scheduleType,
+                    durationInWeeks: durationInWeeks,
+                    dailyTimes: createDailyTimes(startingFrom: Date(), for: durationInWeeks, at: specificTime),
+                    irregularTimes: nil
+                )
+            } else {
+                // Handle the case where specificTime is nil
+                // For example, you can use the current date as a fallback
+                newMedication = AppModels.DogMedicationRecord(
+                    medicationName: medicationName,
+                    dosage: dosage,
+                    scheduleType: scheduleType,
+                    durationInWeeks: durationInWeeks,
+                    dailyTimes: createDailyTimes(startingFrom: Date(), for: durationInWeeks, at: Date()),
+                    irregularTimes: nil
+                )
+            }
         } else {
+            // Irregular schedule
             newMedication = AppModels.DogMedicationRecord(
                 medicationName: medicationName,
                 dosage: dosage,
                 scheduleType: scheduleType,
                 durationInWeeks: nil,
                 dailyTimes: nil,
-                irregularTimes: selectedTimes as? [AppModels.NotificationTime] // Casting to namespaced type
+                irregularTimes: selectedTimes // Passing selectedTimes directly
             )
         }
-
         medications.append(newMedication)
         print("Added new medication: \(medicationName)")
     }
-
-
-
-
-
-
-    
 
     private func saveMedications() {
         print("Saving medications: \(medications)")
@@ -479,7 +480,6 @@ struct MedicationView: View {
         }
     }
 
-    
 
     private func loadMedications() {
         if let savedItems = UserDefaults.standard.data(forKey: "SavedMedications") {
@@ -494,8 +494,6 @@ struct MedicationView: View {
             print("No saved medications data found.")
         }
     }
-
-
 
 private let dateFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -513,8 +511,6 @@ private let dateFormatter: DateFormatter = {
         irregularDates = [AppModels.NotificationTime(date: Date())]
     }
     
-
-
     // Custom ViewModifier for centering a button
     struct CenteredButtonStyle: ViewModifier {
         func body(content: Content) -> some View {
@@ -529,16 +525,6 @@ private let dateFormatter: DateFormatter = {
 
     
     }
-
-    
-
-
-  // Preview Provider
-  struct MedicationView_Previews: PreviewProvider {
-      static var previews: some View {
-          MedicationView()
-      }
-  }
 
 
 
