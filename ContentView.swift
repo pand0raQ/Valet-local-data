@@ -16,14 +16,16 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             
-            DashboardView(medications: $medications)
-            
-        }
-        .onAppear {
-            loadMedications()
-            
+             DashboardView(medications: $medications)
+           // AllergiesView()
         }
     }
+    
+      //  .onAppear {
+          //  loadMedications()
+            
+        //}
+   // }
     
     
     private func loadMedications() {

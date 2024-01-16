@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1519B7CF2B56B0F9001A72F9 /* AllergiesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1519B7CE2B56B0F9001A72F9 /* AllergiesData.swift */; };
+		1519B7D12B56FC9F001A72F9 /* AllergiesCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1519B7D02B56FC9F001A72F9 /* AllergiesCardView.swift */; };
 		1524AB502B34A8B200E6ED38 /* Valet_local_dataApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524AB4F2B34A8B200E6ED38 /* Valet_local_dataApp.swift */; };
 		1524AB522B34A8B200E6ED38 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524AB512B34A8B200E6ED38 /* ContentView.swift */; };
 		1524AB542B34A8B500E6ED38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1524AB532B34A8B500E6ED38 /* Assets.xcassets */; };
@@ -46,6 +48,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1519B7CE2B56B0F9001A72F9 /* AllergiesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesData.swift; sourceTree = "<group>"; };
+		1519B7D02B56FC9F001A72F9 /* AllergiesCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesCardView.swift; sourceTree = "<group>"; };
 		1524AB4C2B34A8B200E6ED38 /* Valet local data.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Valet local data.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1524AB4F2B34A8B200E6ED38 /* Valet_local_dataApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Valet_local_dataApp.swift; sourceTree = "<group>"; };
 		1524AB512B34A8B200E6ED38 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -144,6 +148,7 @@
 				1573D57A2B45B6A6000C2131 /* vomitingData.swift */,
 				15A6F2272B383CAE00FB9DAA /* DogAppetiteData.swift */,
 				15A6F2292B385C2D00FB9DAA /* DogMedicationData.swift */,
+				1519B7CE2B56B0F9001A72F9 /* AllergiesData.swift */,
 				15A6F22B2B386A7E00FB9DAA /* UIApplicationDelegate.swift */,
 				1573D56A2B405223000C2131 /* AddEntryView.swift */,
 				1573D56C2B4052AE000C2131 /* CardModel.swift */,
@@ -158,15 +163,16 @@
 			isa = PBXGroup;
 			children = (
 				15A6F2122B37A15000FB9DAA /* DashboardView.swift */,
-				1573D5742B433276000C2131 /* PoopingCardView.swift */,
 				15A6F20E2B379D2600FB9DAA /* poopingView.swift */,
-				1573D5762B435EC2000C2131 /* VomitingCardView.swift */,
+				1573D5742B433276000C2131 /* PoopingCardView.swift */,
 				15A6F2162B37A29600FB9DAA /* VomitingView.swift */,
+				1573D5762B435EC2000C2131 /* VomitingCardView.swift */,
 				15A6F2182B37A2AB00FB9DAA /* AppetiteView.swift */,
 				1538CC082B45DC540062E345 /* AppetiteCardView.swift */,
 				15A6F21A2B37A2B900FB9DAA /* MedicationView.swift */,
 				158F78C92B4DAE7400CF0B35 /* MedicationCardView.swift */,
 				15A6F21C2B37A2C800FB9DAA /* AllergiesView.swift */,
+				1519B7D02B56FC9F001A72F9 /* AllergiesCardView.swift */,
 				15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */,
 				15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */,
 				158E49EC2B3A181500681298 /* BehaviorView.swift */,
@@ -258,6 +264,7 @@
 				15A6F21F2B37A2D900FB9DAA /* BitchcycleView.swift in Sources */,
 				15A6F21B2B37A2B900FB9DAA /* MedicationView.swift in Sources */,
 				158F78CA2B4DAE7400CF0B35 /* MedicationCardView.swift in Sources */,
+				1519B7D12B56FC9F001A72F9 /* AllergiesCardView.swift in Sources */,
 				15A6F20B2B379C9100FB9DAA /* poopingData.swift in Sources */,
 				15B214AC2B4F448F001039BF /* ScheduledMedicationsTimelineView.swift in Sources */,
 				15A6F22C2B386A7E00FB9DAA /* UIApplicationDelegate.swift in Sources */,
@@ -266,6 +273,7 @@
 				15A6F2132B37A15100FB9DAA /* DashboardView.swift in Sources */,
 				15A6F21D2B37A2C800FB9DAA /* AllergiesView.swift in Sources */,
 				1573D5712B40715F000C2131 /* MenuDataModel.swift in Sources */,
+				1519B7CF2B56B0F9001A72F9 /* AllergiesData.swift in Sources */,
 				158E49EF2B3A20EB00681298 /* SavedResultsView.swift in Sources */,
 				15A6F20F2B379D2600FB9DAA /* poopingView.swift in Sources */,
 				1538CC092B45DC540062E345 /* AppetiteCardView.swift in Sources */,

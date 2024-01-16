@@ -56,6 +56,9 @@ struct DashboardView: View {
                 AppetiteCardView()
             case "Medication Log":
                 MedicationCardView(medications: $medications)
+            case "Allergies Log":
+                AllergiesCardView()
+                
                 
                 // Add other cases as needed
             default:

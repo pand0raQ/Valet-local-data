@@ -24,6 +24,8 @@ class MenuDataModel {
         MenuItem(title: "Vomiting Log", category: "Health"),
         MenuItem(title: "Appetite Log", category: "Health"),
         MenuItem(title: "Medication Log", category: "Health"),
+        MenuItem(title: "Allergies Log", category: "Health"),
+
 
         
         // ... add more items as needed
