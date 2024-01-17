@@ -90,7 +90,12 @@ struct MedicationCardView: View {
         let upcomingEvents = medications.flatMap { medication -> [(String, String, Date)] in
             let times = (medication.dailyTimes ?? []) + (medication.irregularTimes ?? [])
             return times.compactMap { time in
-                time.date > now ? (medication.medicationName, medication.dosage, time.date) : nil
+                // Check if the time is in the future and not administered
+                if time.date > now && !time.administered {
+                    return (medication.medicationName, medication.dosage, time.date)
+                } else {
+                    return nil
+                }
             }
         }
         .filter { $0.2 > now }

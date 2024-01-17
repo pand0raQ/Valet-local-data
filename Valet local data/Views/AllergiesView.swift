@@ -8,6 +8,22 @@
 import SwiftUI
 import PhotosUI
 
+struct CenteredButtonStyle: ViewModifier {
+    func body(content: Content) -> some View {
+        HStack {
+            Spacer()
+            content
+            Spacer()
+        }
+    }
+}
+
+extension View {
+    func centeredButtonStyle() -> some View {
+        self.modifier(CenteredButtonStyle())
+    }
+}
+
 
 
 struct AllergiesView: View {
@@ -52,6 +68,8 @@ struct AllergiesView: View {
                         }
                         .padding()
                         .buttonStyle(.borderedProminent)
+                        .centeredButtonStyle()
+
                         .tint(.green)
                         
                         if let rashImage = rashImage {
@@ -81,6 +99,8 @@ struct AllergiesView: View {
                         .padding()
                         .buttonStyle(.borderedProminent)
                         .tint(.green)
+                        .centeredButtonStyle()
+
                     }
                   
                 }
@@ -107,6 +127,7 @@ struct AllergiesView: View {
                         Button("Save") {
                             saveEyesDataEntry()
                         }
+                        .centeredButtonStyle()
                         .padding()
                         .buttonStyle(.borderedProminent)
                         .tint(.green)
@@ -216,13 +237,13 @@ struct AllergiesView: View {
         
         private func saveRashDataEntry() {
             let currentDate = Date() // Get the current date
-            let imageData = rashImage?.jpegData(compressionQuality: 1.0)
+            let imageData = rashImage?.jpegData(compressionQuality: 0.5)
             
             let newRashData = RashData(dater: currentDate, imageData: imageData)
             rashDataEntries.append(newRashData)
             saveRashDataToUserDefaults()
 
-            alertMessage = "Rash data entry saved successfully."
+            alertMessage = "Rash info  saved "
             showAlert = true
         }
         
@@ -231,19 +252,19 @@ struct AllergiesView: View {
               let newIntensityEntry = ScratchingIntensityEntry(intensity: scratchingIntensity, datescr: currentDate)
             scratchingIntensityEntries.append(newIntensityEntry)
             saveScratchingIntensityDataToUserDefaults()
-        alertMessage  = "Scratching Intensity entry saved successfully."
+        alertMessage  = "Scratching Intensity  saved"
         showAlert = true
         }
         
         private func saveEyesDataEntry() {
             let currentDate = Date() // Get the current date
-            let imageData = eyesImage?.jpegData(compressionQuality: 1.0)
+            let imageData = eyesImage?.jpegData(compressionQuality: 0.5)
             
             let newEyesData = EyesData(id: UUID(), dateeye: currentDate, intensity: eyesIntensity, imageData: imageData)
             eyesDataEntries.append(newEyesData)
             saveEyesDataToUserDefaults()
 
-            alertMessage = "Eyes data entry saved successfully."
+            alertMessage = "Problem with eyes   saved "
             showAlert = true
         }
         
@@ -287,6 +308,15 @@ struct AllergiesView: View {
                 eyesDataEntries = savedEntries
             }
         }
+        struct CenteredButtonStyle: ViewModifier {
+            func body(content: Content) -> some View {
+                HStack {
+                    Spacer()
+                    content
+                    Spacer()
+                }
+            }
+        }
         
     }
 
@@ -298,4 +328,7 @@ extension DateFormatter {
         return formatter
     }()
 }
+
+
+
 

@@ -9,6 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var medications: [AppModels.DogMedicationRecord] = []
+    @StateObject var groomingViewModel = GroomingViewModel()
+
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
     
@@ -16,16 +18,16 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             
-             DashboardView(medications: $medications)
-           // AllergiesView()
+            DashboardView(medications: $medications, groomingViewModel: groomingViewModel) // Pass groomingData here
+        }
+        .onAppear {
+           loadMedications()
+
         }
     }
     
-      //  .onAppear {
-          //  loadMedications()
-            
-        //}
-   // }
+    
+   
     
     
     private func loadMedications() {
@@ -58,10 +60,13 @@ struct ContentView: View {
             print("No saved medications data found.")
         }
     }
+ 
+    
+    
+  }
     
     
 
-}
 
 
 

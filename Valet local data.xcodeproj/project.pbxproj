@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		150A85B22B58181600298552 /* GroomingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150A85B12B58181600298552 /* GroomingData.swift */; };
+		150A85B42B58194000298552 /* GroomingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 150A85B32B58194000298552 /* GroomingCardView.swift */; };
 		1519B7CF2B56B0F9001A72F9 /* AllergiesData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1519B7CE2B56B0F9001A72F9 /* AllergiesData.swift */; };
 		1519B7D12B56FC9F001A72F9 /* AllergiesCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1519B7D02B56FC9F001A72F9 /* AllergiesCardView.swift */; };
 		1524AB502B34A8B200E6ED38 /* Valet_local_dataApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1524AB4F2B34A8B200E6ED38 /* Valet_local_dataApp.swift */; };
@@ -48,6 +50,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		150A85B12B58181600298552 /* GroomingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroomingData.swift; sourceTree = "<group>"; };
+		150A85B32B58194000298552 /* GroomingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroomingCardView.swift; sourceTree = "<group>"; };
 		1519B7CE2B56B0F9001A72F9 /* AllergiesData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesData.swift; sourceTree = "<group>"; };
 		1519B7D02B56FC9F001A72F9 /* AllergiesCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesCardView.swift; sourceTree = "<group>"; };
 		1524AB4C2B34A8B200E6ED38 /* Valet local data.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Valet local data.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -149,10 +153,11 @@
 				15A6F2272B383CAE00FB9DAA /* DogAppetiteData.swift */,
 				15A6F2292B385C2D00FB9DAA /* DogMedicationData.swift */,
 				1519B7CE2B56B0F9001A72F9 /* AllergiesData.swift */,
+				150A85B12B58181600298552 /* GroomingData.swift */,
+				1573D5702B40715F000C2131 /* MenuDataModel.swift */,
 				15A6F22B2B386A7E00FB9DAA /* UIApplicationDelegate.swift */,
 				1573D56A2B405223000C2131 /* AddEntryView.swift */,
 				1573D56C2B4052AE000C2131 /* CardModel.swift */,
-				1573D5702B40715F000C2131 /* MenuDataModel.swift */,
 				1573D5642B4051BE000C2131 /* DataModel.swift */,
 				153427D32B482B3300E60D77 /* AppDelegate.swift */,
 			);
@@ -173,9 +178,10 @@
 				158F78C92B4DAE7400CF0B35 /* MedicationCardView.swift */,
 				15A6F21C2B37A2C800FB9DAA /* AllergiesView.swift */,
 				1519B7D02B56FC9F001A72F9 /* AllergiesCardView.swift */,
-				15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */,
 				15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */,
+				150A85B32B58194000298552 /* GroomingCardView.swift */,
 				158E49EC2B3A181500681298 /* BehaviorView.swift */,
+				15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */,
 				158E49EE2B3A20EB00681298 /* SavedResultsView.swift */,
 				1573D5662B4051E0000C2131 /* CardView.swift */,
 				1573D56E2B406E61000C2131 /* FilterView.swift */,
@@ -261,11 +267,13 @@
 				1573D5792B45A837000C2131 /* SecondDashboardView.swift in Sources */,
 				1573D5752B433276000C2131 /* PoopingCardView.swift in Sources */,
 				15A6F2282B383CAE00FB9DAA /* DogAppetiteData.swift in Sources */,
+				150A85B42B58194000298552 /* GroomingCardView.swift in Sources */,
 				15A6F21F2B37A2D900FB9DAA /* BitchcycleView.swift in Sources */,
 				15A6F21B2B37A2B900FB9DAA /* MedicationView.swift in Sources */,
 				158F78CA2B4DAE7400CF0B35 /* MedicationCardView.swift in Sources */,
 				1519B7D12B56FC9F001A72F9 /* AllergiesCardView.swift in Sources */,
 				15A6F20B2B379C9100FB9DAA /* poopingData.swift in Sources */,
+				150A85B22B58181600298552 /* GroomingData.swift in Sources */,
 				15B214AC2B4F448F001039BF /* ScheduledMedicationsTimelineView.swift in Sources */,
 				15A6F22C2B386A7E00FB9DAA /* UIApplicationDelegate.swift in Sources */,
 				153427D42B482B3300E60D77 /* AppDelegate.swift in Sources */,
