@@ -1,9 +1,3 @@
-//
-//  poopingData.swift
-//  Valet local data
-//
-//  Created by Анастасия Степаносова on 24.12.2023.
-//
 
 import Foundation
 
@@ -17,8 +11,26 @@ enum Consistency: String, CaseIterable, Codable {
 
 // PoopingData struct
 struct PoopingData: Codable {
-    var lastPoopedDateTime: Date
+    var lastPoopedDateTime: Date?
     var consist: Consistency
     var consistComment: String
     var color: String
+
+    // Initializer
+    init(lastPoopedDateTime: Date? = nil,
+         consist: Consistency = .regular,
+         consistComment: String = "",
+         color: String = "") {
+        self.lastPoopedDateTime = lastPoopedDateTime
+        self.consist = consist
+        self.consistComment = consistComment
+        self.color = color
+    }
+
+    func poopedInLast24Hours() -> Bool {
+        guard let lastPooped = lastPoopedDateTime else { return false }
+        return Calendar.current.isDate(lastPooped, inSameDayAs: Date()) ||
+               Calendar.current.isDateInToday(lastPooped)
+    }
 }
+

@@ -22,6 +22,7 @@ struct ContentView: View {
         }
         .onAppear {
            loadMedications()
+            loadPoopingData()
 
         }
     }
@@ -60,7 +61,21 @@ struct ContentView: View {
             print("No saved medications data found.")
         }
     }
- 
+    private func loadPoopingData() -> PoopingData {
+        if let savedData = UserDefaults.standard.data(forKey: "PoopingData") {
+            let decoder = JSONDecoder()
+            if let loadedRecord = try? decoder.decode(PoopingData.self, from: savedData),
+               loadedRecord.lastPoopedDateTime != nil {
+                return loadedRecord
+            }else {
+                print("Failed to decode PoopingData")
+            }
+        } else {
+                print("No PoopingData found in UserDefaults")
+            }
+        
+        return PoopingData()
+    }
     
     
   }

@@ -4,26 +4,29 @@ struct PoopingCardView: View {
     @State private var isExpanded = false
     @State private var lastPoopingEntry: PoopingData?
     @State private var navigateToPoopingView = false  // State to control navigation
+    
+    let sharedUserDefaults = UserDefaults(suiteName: "group.valet.local.data")
+
 
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 // Left-side content
-                VStack(alignment: .leading) {
-                    if let entry = lastPoopingEntry {
-                        Text("Last 💩: \(entry.lastPoopedDateTime, formatter: dateFormatter)")
-                        
-                        if isExpanded {
-                            Text("Consistency: \(entry.consist.rawValue)")
-                            Text("Consistency Comment: \(entry.consistComment)")
-                            Text("Color: \(entry.color)")
-                        }
-                    } else {
-                        Text("No data saved")
-                    }
-                }
+                               VStack(alignment: .leading) {
+                                   if let lastPooped = lastPoopingEntry?.lastPoopedDateTime {
+                                       Text("Last 💩: \(lastPooped, formatter: dateFormatter)")
+                                   } else {
+                                       Text("Last 💩: No data saved")
+                                   }
+                                   
+                                   if isExpanded, let entry = lastPoopingEntry {
+                                       Text("Consistency: \(entry.consist.rawValue)")
+                                       Text("Consistency Comment: \(entry.consistComment)")
+                                       Text("Color: \(entry.color)")
+                                   }
+                               }
 
-                Spacer()
+                               Spacer()
 
                 // Button to navigate to poopingView
                 Button(action: {
@@ -48,13 +51,20 @@ struct PoopingCardView: View {
             .padding(.top, 8)
 
             // Navigation link (hidden)
-            NavigationLink(destination: poopingView(), isActive: $navigateToPoopingView) {
+            NavigationLink(destination: PoopingView(), isActive: $navigateToPoopingView) {
                 EmptyView()
             }
         }
         .onAppear {
             lastPoopingEntry = loadFromUserDefaults()
-        }
+            if let loadedData = loadFromUserDefaults() {
+                    lastPoopingEntry = loadedData
+                    print("Loaded data: \(loadedData)")
+                } else {
+                    print("No data found in UserDefaults")
+                }
+            }
+        
         .padding()
         .frame(maxWidth: .infinity)
         .background(Color.blue)
@@ -64,15 +74,18 @@ struct PoopingCardView: View {
     }
 
     private func loadFromUserDefaults() -> PoopingData? {
-        if let savedData = UserDefaults.standard.data(forKey: "PoopingData") {
-            let decoder = JSONDecoder()
-            if let loadedRecord = try? decoder.decode(PoopingData.self, from: savedData) {
-                return loadedRecord
-            }
-        }
-        return nil
-    }
-
+           if let savedData = sharedUserDefaults?.data(forKey: "PoopingData") {
+               let decoder = JSONDecoder()
+               if let loadedRecord = try? decoder.decode(PoopingData.self, from: savedData) {
+                   return loadedRecord
+               } else {
+                   print("Failed to decode PoopingData")
+               }
+           } else {
+               print("No PoopingData found in shared UserDefaults")
+           }
+           return nil
+       }
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short

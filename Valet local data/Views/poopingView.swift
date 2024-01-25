@@ -1,34 +1,26 @@
-//
-//  poopingView.swift
-//  Valet local data
-//
-//  Created by Анастасия Степаносова on 24.12.2023.
-//
-
-import Foundation
 
 import SwiftUI
+import WidgetKit
 
-struct poopingView: View {
-    @State private var poopingData = PoopingData(
-        lastPoopedDateTime: Date(),
-        consist: .regular,
-        consistComment: "",
-        color: ""
-    )
+struct PoopingView: View {
+    @State private var poopingData = PoopingData()
+    @State private var datePickerDate: Date = Date()
     @State private var showingSaveConfirmation = false
     @State private var showingConsistencyAlert = false
     @State private var temporaryConsistencyComment = ""
+    
     var body: some View {
         NavigationView {
             Form {
                 DatePicker(
-                    selection: $poopingData.lastPoopedDateTime,
+                    "Select Date and Time",
+                    selection: $datePickerDate,
                     displayedComponents: [.date, .hourAndMinute]
-                ){
-                    Text("")
+                )
+                .datePickerStyle(WheelDatePickerStyle())
+                .onChange(of: datePickerDate) { newValue in
+                    poopingData.lastPoopedDateTime = newValue
                 }
-                                .datePickerStyle(WheelDatePickerStyle())
                 
                 Section(header: Text("Consistency").font(.footnote)) {
                     Picker("Select Consistency", selection: $poopingData.consist) {
@@ -37,30 +29,42 @@ struct poopingView: View {
                         }
                     }
                 }
-              
                 .pickerStyle(SegmentedPickerStyle())
                 .onChange(of: poopingData.consist) { newValue in
                     if newValue == .constipation || newValue == .droopy || newValue == .diarrhoea {
-                        self.showingConsistencyAlert = true
+                        showingConsistencyAlert = true
                     }
                 }
-
+                
                 TextField("Color", text: $poopingData.color)
                 
                 HStack {
-                                    Spacer() // Spacer before the button for centering
-                                    Button("Save") {
-                                        saveToUserDefaults()
-                                    }
-                                    .buttonStyle(.borderedProminent) // Bordered and prominent style
-                                    .tint(.green) // Green color
-                                    Spacer() // Spacer after the button for centering
-                                }
-                                .padding(.vertical) // Add vertical padding for spacing
-
-
+                    Spacer()
+                    Button("Save") {
+                        PoopingDataManager.shared.savePoopingData(poopingData)
+                        WidgetCenter.shared.reloadAllTimelines()
+                        showingSaveConfirmation = true
+                        
+                        
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.green)
+                    Spacer()
+                    Button("Log Current Poop") {
+                        PoopingDataManager.shared.logCurrentPoopingData()
+                        showingSaveConfirmation = true
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(.blue)
+                }
+                .padding(.vertical)
             }
-            
+            .onAppear {
+                if let loadedData = PoopingDataManager.shared.loadFromUserDefaults() {
+                    poopingData = loadedData
+                    datePickerDate = loadedData.lastPoopedDateTime ?? Date()
+                }
+            }
             .alert(isPresented: $showingSaveConfirmation) {
                 Alert(title: Text("Saved"), message: Text("Your entry has been saved successfully."), dismissButton: .default(Text("OK")))
             }
@@ -70,54 +74,53 @@ struct poopingView: View {
                     poopingData.consistComment = temporaryConsistencyComment
                     temporaryConsistencyComment = ""
                 }
-                
             }
-
             .navigationTitle("Pooping Log")
             .navigationBarTitleDisplayMode(.inline)
         }
-        
-        
     }
     
-
-    private func loadFromUserDefaults() -> PoopingData? {
-        if let savedData = UserDefaults.standard.data(forKey: "PoopingData") {
-            let decoder = JSONDecoder()
-            if let loadedRecord = try? decoder.decode(PoopingData.self, from: savedData) {
-                return loadedRecord
-            }
-        }
-        return nil
-    }
     
-    private let dateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        return formatter
-    }()
+  
     
-    private func saveToUserDefaults() {
-        if let encoded = try? JSONEncoder().encode(poopingData) {
-            UserDefaults.standard.set(encoded, forKey: "PoopingData")
-            showingSaveConfirmation = true
-            resetForm()
-        }
-    }
-
     private func resetForm() {
-        poopingData = PoopingData (
-            lastPoopedDateTime: Date(),
-            consist: .regular,
-            consistComment: "",
-            color: ""
-        )
-    }
-}
+            poopingData = PoopingData()
+            datePickerDate = Date()
+        }}
 
-struct poopingView_Previews: PreviewProvider {
-    static var previews: some View {
-        poopingView()
+
+class PoopingDataManager {
+    static let shared = PoopingDataManager()
+    private let sharedUserDefaults = UserDefaults(suiteName: "group.valet.local.data")
+    
+    private init() {}
+    
+    func logCurrentPoopingData() {
+        let newPoopingData = PoopingData(
+            lastPoopedDateTime: Date(), // Current time
+            consist: .regular,         // Consistency set to regular
+            color: ""                  // Empty color
+        )
+        savePoopingData(newPoopingData)
     }
+    
+    func savePoopingData(_ data: PoopingData) {
+        if let encoded = try? JSONEncoder().encode(data) {
+            sharedUserDefaults?.set(encoded, forKey: "PoopingData")
+            WidgetCenter.shared.reloadAllTimelines()
+        } else {
+            print("Failed to encode PoopingData")
+        }
+    }
+    func loadFromUserDefaults() -> PoopingData? {
+            if let savedData = sharedUserDefaults?.data(forKey: "PoopingData") {
+                let decoder = JSONDecoder()
+                if let loadedRecord = try? decoder.decode(PoopingData.self, from: savedData) {
+                    return loadedRecord
+                }
+            }
+            return nil
+        }
+    
+  
 }

@@ -12,8 +12,10 @@ struct GroomingActivity: Identifiable {
         guard let lastCompleted = lastCompletedDate else { return nil }
         return Calendar.current.date(byAdding: .weekOfYear, value: frequencyInWeeks, to: lastCompleted)
     }
-    
-    
+
+    mutating func markAsCompleted() {
+        self.lastCompletedDate = Date() // Sets the current date as the last completed date
+    }
 }
 
 class GroomingViewModel: ObservableObject {

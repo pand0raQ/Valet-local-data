@@ -47,8 +47,12 @@ struct DashboardView: View {
                             
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack(spacing: 20) {
-                                    ForEach(groomingViewModel.groomingActivities, id: \.id) { activity in
-                                        GroomingCardView(groomingActivity: .constant(activity))
+                                    ForEach(groomingViewModel.groomingActivities.indices, id: \.self) { index in
+                                        GroomingCardView(groomingActivity: $groomingViewModel.groomingActivities[index], onComplete: {
+                                            // This closure is called when an activity is marked as completed.
+                                            groomingViewModel.groomingActivities[index].markAsCompleted()
+                                            // Additional code to handle the completion can be added here.
+                                        })
                                     }
                                 }
                             }
@@ -96,9 +100,13 @@ struct DashboardView: View {
         case "Allergies Log":
             AllergiesCardView()
         case "Grooming Log":
-                                    ForEach(groomingViewModel.groomingActivities, id: \.id) { activity in
-                                        GroomingCardView(groomingActivity: .constant(activity))
-                                    }
+            ForEach(groomingViewModel.groomingActivities.indices, id: \.self) { index in
+                GroomingCardView(groomingActivity: $groomingViewModel.groomingActivities[index], onComplete: {
+                    // This closure is called when an activity is marked as completed.
+                    groomingViewModel.groomingActivities[index].markAsCompleted()
+                    // Additional code to handle the completion can be added here.
+                })
+            }
         // ... other cases ...
         default:
             EmptyView()

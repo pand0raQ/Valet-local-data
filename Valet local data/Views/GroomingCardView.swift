@@ -4,6 +4,8 @@ import SwiftUI
 struct GroomingCardView: View {
     @Binding var groomingActivity: GroomingActivity
     @State private var navigateGroomingView = false  // State for controlling navigation
+    var onComplete: () -> Void
+
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -25,7 +27,7 @@ struct GroomingCardView: View {
             }
 
             Button("Mark as Completed") {
-                markActivityAsCompleted()
+                onComplete()
             }
             .buttonStyle(.borderedProminent)
         }
@@ -46,9 +48,5 @@ struct GroomingCardView: View {
     }
 }
 
-struct GroomingCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        GroomingCardView(groomingActivity: .constant(GroomingActivity(activityName: "Paws Clipping", frequencyInWeeks: 4, lastCompletedDate: Date())))
-    }
-}
+
 
