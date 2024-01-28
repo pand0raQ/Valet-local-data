@@ -1,9 +1,4 @@
-//
-//  AllergiesView.swift
-//  Valet local data
-//
-//  Created by Анастасия Степаносова on 24.12.2023.
-//
+
 
 import SwiftUI
 import PhotosUI
@@ -236,37 +231,33 @@ struct AllergiesView: View {
         
         
         private func saveRashDataEntry() {
-            let currentDate = Date() // Get the current date
-            let imageData = rashImage?.jpegData(compressionQuality: 0.5)
-            
-            let newRashData = RashData(dater: currentDate, imageData: imageData)
-            rashDataEntries.append(newRashData)
-            saveRashDataToUserDefaults()
+              let imageData = rashImage?.jpegData(compressionQuality: 0.5)
+              let newRashData = RashData(dater: rashDate, imageData: imageData)
+              rashDataEntries.append(newRashData)
+              saveRashDataToUserDefaults()
 
-            alertMessage = "Rash info  saved "
-            showAlert = true
-        }
-        
-        private func saveScratchingIntensityDataEntry() {
-            let currentDate = Date() // Get the current date
-              let newIntensityEntry = ScratchingIntensityEntry(intensity: scratchingIntensity, datescr: currentDate)
-            scratchingIntensityEntries.append(newIntensityEntry)
-            saveScratchingIntensityDataToUserDefaults()
-        alertMessage  = "Scratching Intensity  saved"
-        showAlert = true
-        }
-        
-        private func saveEyesDataEntry() {
-            let currentDate = Date() // Get the current date
-            let imageData = eyesImage?.jpegData(compressionQuality: 0.5)
-            
-            let newEyesData = EyesData(id: UUID(), dateeye: currentDate, intensity: eyesIntensity, imageData: imageData)
-            eyesDataEntries.append(newEyesData)
-            saveEyesDataToUserDefaults()
+              alertMessage = "Rash info saved"
+              showAlert = true
+          }
+          
+          private func saveScratchingIntensityDataEntry() {
+              let newIntensityEntry = ScratchingIntensityEntry(intensity: scratchingIntensity, datescr: scratchingIntensityDate)
+              scratchingIntensityEntries.append(newIntensityEntry)
+              saveScratchingIntensityDataToUserDefaults()
 
-            alertMessage = "Problem with eyes   saved "
-            showAlert = true
-        }
+              alertMessage = "Scratching Intensity saved"
+              showAlert = true
+          }
+          
+          private func saveEyesDataEntry() {
+              let imageData = eyesImage?.jpegData(compressionQuality: 0.5)
+              let newEyesData = EyesData(id: UUID(), dateeye: eyesDate, intensity: eyesIntensity, imageData: imageData)
+              eyesDataEntries.append(newEyesData)
+              saveEyesDataToUserDefaults()
+
+              alertMessage = "Problem with eyes saved"
+              showAlert = true
+          }
         
         
         // UserDefaults Persistence

@@ -29,6 +29,10 @@
 		1573D5772B435EC2000C2131 /* VomitingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1573D5762B435EC2000C2131 /* VomitingCardView.swift */; };
 		1573D5792B45A837000C2131 /* SecondDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1573D5782B45A837000C2131 /* SecondDashboardView.swift */; };
 		1573D57B2B45B6A6000C2131 /* vomitingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1573D57A2B45B6A6000C2131 /* vomitingData.swift */; };
+		158A55402B65D7CC009C91AE /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A553F2B65D7CC009C91AE /* CustomTabBarView.swift */; };
+		158A55422B65D7FC009C91AE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A55412B65D7FC009C91AE /* MainView.swift */; };
+		158A55442B65D81F009C91AE /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A55432B65D81F009C91AE /* CalendarView.swift */; };
+		158A55462B65D82D009C91AE /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A55452B65D82D009C91AE /* ProfileView.swift */; };
 		158E49EB2B39DA9500681298 /* ImagePickerAllergy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158E49EA2B39DA9500681298 /* ImagePickerAllergy.swift */; };
 		158E49ED2B3A181500681298 /* BehaviorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158E49EC2B3A181500681298 /* BehaviorView.swift */; };
 		158E49EF2B3A20EB00681298 /* SavedResultsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158E49EE2B3A20EB00681298 /* SavedResultsView.swift */; };
@@ -113,6 +117,10 @@
 		1573D5762B435EC2000C2131 /* VomitingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VomitingCardView.swift; sourceTree = "<group>"; };
 		1573D5782B45A837000C2131 /* SecondDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondDashboardView.swift; sourceTree = "<group>"; };
 		1573D57A2B45B6A6000C2131 /* vomitingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vomitingData.swift; sourceTree = "<group>"; };
+		158A553F2B65D7CC009C91AE /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
+		158A55412B65D7FC009C91AE /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		158A55432B65D81F009C91AE /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		158A55452B65D82D009C91AE /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		158E49EA2B39DA9500681298 /* ImagePickerAllergy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerAllergy.swift; sourceTree = "<group>"; };
 		158E49EC2B3A181500681298 /* BehaviorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorView.swift; sourceTree = "<group>"; };
 		158E49EE2B3A20EB00681298 /* SavedResultsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedResultsView.swift; sourceTree = "<group>"; };
@@ -258,6 +266,10 @@
 				1573D5782B45A837000C2131 /* SecondDashboardView.swift */,
 				1538CC0A2B4710830062E345 /* ScheduledNotificationsView.swift */,
 				15B214AB2B4F448F001039BF /* ScheduledMedicationsTimelineView.swift */,
+				158A553F2B65D7CC009C91AE /* CustomTabBarView.swift */,
+				158A55412B65D7FC009C91AE /* MainView.swift */,
+				158A55432B65D81F009C91AE /* CalendarView.swift */,
+				158A55452B65D82D009C91AE /* ProfileView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -390,6 +402,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1573D56F2B406E61000C2131 /* FilterView.swift in Sources */,
+				158A55422B65D7FC009C91AE /* MainView.swift in Sources */,
 				1573D5792B45A837000C2131 /* SecondDashboardView.swift in Sources */,
 				1573D5752B433276000C2131 /* PoopingCardView.swift in Sources */,
 				15A6F2282B383CAE00FB9DAA /* DogAppetiteData.swift in Sources */,
@@ -408,6 +421,7 @@
 				15A6F21D2B37A2C800FB9DAA /* AllergiesView.swift in Sources */,
 				1573D5712B40715F000C2131 /* MenuDataModel.swift in Sources */,
 				15E5F0B82B61796900707F3F /* TimelineProv.swift in Sources */,
+				158A55462B65D82D009C91AE /* ProfileView.swift in Sources */,
 				1519B7CF2B56B0F9001A72F9 /* AllergiesData.swift in Sources */,
 				158E49EF2B3A20EB00681298 /* SavedResultsView.swift in Sources */,
 				15E533352B61D42400B9BECD /* intentTest.swift in Sources */,
@@ -427,7 +441,9 @@
 				1573D5672B4051E0000C2131 /* CardView.swift in Sources */,
 				1573D5652B4051BE000C2131 /* DataModel.swift in Sources */,
 				1573D5772B435EC2000C2131 /* VomitingCardView.swift in Sources */,
+				158A55402B65D7CC009C91AE /* CustomTabBarView.swift in Sources */,
 				1573D56B2B405223000C2131 /* AddEntryView.swift in Sources */,
+				158A55442B65D81F009C91AE /* CalendarView.swift in Sources */,
 				1538CC0B2B4710830062E345 /* ScheduledNotificationsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,12 +17,12 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            
-            DashboardView(medications: $medications, groomingViewModel: groomingViewModel) // Pass groomingData here
+            MainView()
+          //  DashboardView(medications: $medications, groomingViewModel: groomingViewModel) // Pass groomingData here
         }
         .onAppear {
            loadMedications()
-            loadPoopingData()
+          //  loadPoopingData()
 
         }
     }

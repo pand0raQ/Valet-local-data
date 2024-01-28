@@ -13,7 +13,7 @@ struct PoopingView: View {
         NavigationView {
             Form {
                 DatePicker(
-                    "Select Date and Time",
+                    "",
                     selection: $datePickerDate,
                     displayedComponents: [.date, .hourAndMinute]
                 )
@@ -50,13 +50,9 @@ struct PoopingView: View {
                     .buttonStyle(.borderedProminent)
                     .tint(.green)
                     Spacer()
-                    Button("Log Current Poop") {
-                        PoopingDataManager.shared.logCurrentPoopingData()
-                        showingSaveConfirmation = true
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .tint(.blue)
+            
                 }
+                
                 .padding(.vertical)
             }
             .onAppear {
@@ -81,12 +77,14 @@ struct PoopingView: View {
     }
     
     
-  
+    
     
     private func resetForm() {
-            poopingData = PoopingData()
-            datePickerDate = Date()
-        }}
+        poopingData = PoopingData()
+        datePickerDate = Date()
+    }
+    
+}
 
 
 class PoopingDataManager {
@@ -124,3 +122,13 @@ class PoopingDataManager {
     
   
 }
+
+
+/*
+ Button("Log Current Poop") {
+     PoopingDataManager.shared.logCurrentPoopingData()
+     showingSaveConfirmation = true
+ }
+ .buttonStyle(.borderedProminent)
+ .tint(.blue)
+ */

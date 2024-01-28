@@ -189,12 +189,12 @@ struct MedicationView: View {
                         })
                     }
                 }
-                Button("View Scheduled Notifications") {
-                    showScheduledNotifications = true
-                }
-                NavigationLink(destination: ScheduledNotificationsView(medications: $medications), isActive: $showScheduledNotifications) {
-                    EmptyView()
-                }
+           //     Button("View Scheduled Notifications") {
+          //          showScheduledNotifications = true
+          //      }
+          //      NavigationLink(destination: ScheduledNotificationsView(medications: $medications), isActive: $showScheduledNotifications) {
+         //           EmptyView()
+             //   }
             }
             .navigationBarTitle("Medications")
         }

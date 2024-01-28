@@ -4,12 +4,12 @@ import SwiftUI
 
 struct PoopingDataWidgetView: View {
     @State private var poopingData = PoopingData()
-    let justpooped = PoopingDataManager.shared.logCurrentPoopingData()
+  //  let justpooped = PoopingDataManager.shared.logCurrentPoopingData()
     
     let entry: PoopingDataProvider.Entry
-    private func justPooped() {
-        PoopingDataManager.shared.logCurrentPoopingData()
-    }
+  //  private func justPooped() {
+   //     PoopingDataManager.shared.logCurrentPoopingData()
+ //   }
 
     var body: some View {
         
@@ -28,9 +28,9 @@ struct PoopingDataWidgetView: View {
                     .foregroundColor(.white)
             }
 
-            Button(intent: PoopIntent()) {
+           Button(intent: PoopIntent()) {
                 Text("Just pooped")
-                    .padding(.horizontal)
+.padding(.horizontal)
             }
 
             }
