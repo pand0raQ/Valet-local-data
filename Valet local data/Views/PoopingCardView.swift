@@ -56,14 +56,14 @@ struct PoopingCardView: View {
             }
         }
         .onAppear {
+            // Load the most recent pooping entry from UserDefaults when the view appears
             lastPoopingEntry = loadFromUserDefaults()
-            if let loadedData = loadFromUserDefaults() {
-                    lastPoopingEntry = loadedData
-                    print("Loaded data: \(loadedData)")
-                } else {
-                    print("No data found in UserDefaults")
-                }
+            if lastPoopingEntry != nil {
+                print("Loaded data: \(String(describing: lastPoopingEntry))")
+            } else {
+                print("No data found in UserDefaults")
             }
+        }
         
         .padding()
         .frame(maxWidth: .infinity)
@@ -74,18 +74,21 @@ struct PoopingCardView: View {
     }
 
     private func loadFromUserDefaults() -> PoopingData? {
-           if let savedData = sharedUserDefaults?.data(forKey: "PoopingData") {
-               let decoder = JSONDecoder()
-               if let loadedRecord = try? decoder.decode(PoopingData.self, from: savedData) {
-                   return loadedRecord
-               } else {
-                   print("Failed to decode PoopingData")
-               }
-           } else {
-               print("No PoopingData found in shared UserDefaults")
-           }
-           return nil
-       }
+        // Attempt to fetch the data for the key "PoopingDataArray"
+        if let savedData = sharedUserDefaults?.data(forKey: "PoopingDataArray") {
+            let decoder = JSONDecoder()
+            // Decode an array of PoopingData, not a single instance
+            if let loadedRecords = try? decoder.decode([PoopingData].self, from: savedData), !loadedRecords.isEmpty {
+                // Return the most recent entry
+                return loadedRecords.last
+            } else {
+                print("Failed to decode PoopingData or no entries available")
+            }
+        } else {
+            print("No PoopingData found in shared UserDefaults")
+        }
+        return nil
+    }
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short

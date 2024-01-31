@@ -1,42 +1,36 @@
-// FilterView.swift
-
 import SwiftUI
 
 struct FilterView: View {
-    @Binding var selectedCategories: Set<String>
-    let categories: [String]
+        @Binding var selectedLogTypes: Set<LogType>
 
-    var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            Text("Filter Categories")
-                .font(.headline)
-            ForEach(categories, id: \.self) { category in
-                Button(action: {
-                    if selectedCategories.contains(category) {
-                        selectedCategories.remove(category)
-                    } else {
-                        selectedCategories.insert(category)
-                    }
-                }) {
-                    HStack {
-                        Text(category)
-                        Spacer()
-                        if selectedCategories.contains(category) {
-                            Image(systemName: "checkmark")
-                        }
-                    }
-                    .padding(.vertical, 5)
-                }
+        var body: some View {
+            Form {
+                Toggle("Poop Log", isOn: binding(for: .poop))
+                  Toggle("Vomit Log", isOn: binding(for: .vomit))
+                  Toggle("DogAppetiteRecord", isOn: binding(for: .appetite))
+                  Toggle("Allergies", isOn: binding(for: .allergies))
+                  Toggle("Grooming", isOn: binding(for: .grooming))
+                  Toggle("Medication", isOn: binding(for: .medication))
+
+                
+                
+                // Add more log types if needed
             }
+            .navigationBarTitle("Filter Logs")
         }
-        .padding()
-        .background(Color.gray.opacity(0.1))
-        .cornerRadius(10)
-    }
-}
 
-struct FilterView_Previews: PreviewProvider {
-    static var previews: some View {
-        FilterView(selectedCategories: .constant(Set(["Category1", "Category2"])), categories: ["Category1", "Category2", "Category3"])
+        private func binding(for logType: LogType) -> Binding<Bool> {
+            return Binding<Bool>(
+                get: { self.selectedLogTypes.contains(logType) },
+                set: { set in
+                    if set {
+                        self.selectedLogTypes.insert(logType)
+                    } else {
+                        self.selectedLogTypes.remove(logType)
+                    }
+                }
+            )
+        }
     }
-}
+    
+    

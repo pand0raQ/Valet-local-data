@@ -2,7 +2,7 @@
 import Foundation
 import SwiftUI
 
-// NotificationTime struct with identifier for the notification
+
 enum AppModels {
     
     class NotificationTime: ObservableObject, Identifiable, Codable, Hashable {
@@ -62,7 +62,7 @@ enum AppModels {
         var durationInWeeks: Int? // Only used for "Daily"
         var dailyTimes: [NotificationTime]? // Times for daily notifications
         var irregularTimes: [NotificationTime]? // Times for irregular notifications
-
+        
         init(medicationName: String, dosage: String, scheduleType: String, durationInWeeks: Int? = nil, dailyTimes: [NotificationTime]? = nil, irregularTimes: [NotificationTime]? = nil) {
             self.recordId = UUID()
             self.medicationName = medicationName
@@ -72,35 +72,43 @@ enum AppModels {
             self.dailyTimes = dailyTimes
             self.irregularTimes = irregularTimes
         }
-
+        
         // Assuming createDailyTimes is defined elsewhere, or make sure to define it within this class.
         private func createDailyTimes(startingFrom startDate: Date, for durationInWeeks: Int, at selectedTimes: [Date]) -> [AppModels.NotificationTime] {
             var times = [AppModels.NotificationTime]()
             let calendar = Calendar.current
             let numberOfDays = durationInWeeks * 7
-
+            
             for day in 0..<numberOfDays {
                 guard let dayDate = calendar.date(byAdding: .day, value: day, to: startDate) else {
                     continue
                 }
-
+                
                 for selectedTime in selectedTimes {
                     var dateTimeComponents = calendar.dateComponents([.year, .month, .day], from: dayDate)
                     let timeComponents = calendar.dateComponents([.hour, .minute], from: selectedTime)
                     dateTimeComponents.hour = timeComponents.hour
                     dateTimeComponents.minute = timeComponents.minute
-
+                    
                     if let dateTime = calendar.date(from: dateTimeComponents) {
                         let notificationTime = AppModels.NotificationTime(date: dateTime)
                         times.append(notificationTime)
                     }
                 }
             }
-
+            
             return times
         }
+        
+        
+        
+        func wasAdministered(on date: Date) -> Bool {
+                    let allTimes = (dailyTimes ?? []) + (irregularTimes ?? [])
+                    return allTimes.contains { $0.administered && Calendar.current.isDate($0.date, inSameDayAs: date) }
+                }
+            }}
+    
+    
 
-    }
 
-}
 

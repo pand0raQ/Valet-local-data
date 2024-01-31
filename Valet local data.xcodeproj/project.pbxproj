@@ -18,6 +18,8 @@
 		153427D42B482B3300E60D77 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 153427D32B482B3300E60D77 /* AppDelegate.swift */; };
 		1538CC092B45DC540062E345 /* AppetiteCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1538CC082B45DC540062E345 /* AppetiteCardView.swift */; };
 		1538CC0B2B4710830062E345 /* ScheduledNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1538CC0A2B4710830062E345 /* ScheduledNotificationsView.swift */; };
+		154DE30B2B6C5AC6007D72D7 /* dump.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154DE30A2B6C5AC6007D72D7 /* dump.swift */; };
+		1558BAD12B6DC4470077687B /* CalendarPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1558BAD02B6DC4470077687B /* CalendarPlayground.swift */; };
 		1573D5652B4051BE000C2131 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1573D5642B4051BE000C2131 /* DataModel.swift */; };
 		1573D5672B4051E0000C2131 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1573D5662B4051E0000C2131 /* CardView.swift */; };
 		1573D56B2B405223000C2131 /* AddEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1573D56A2B405223000C2131 /* AddEntryView.swift */; };
@@ -29,6 +31,7 @@
 		1573D5772B435EC2000C2131 /* VomitingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1573D5762B435EC2000C2131 /* VomitingCardView.swift */; };
 		1573D5792B45A837000C2131 /* SecondDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1573D5782B45A837000C2131 /* SecondDashboardView.swift */; };
 		1573D57B2B45B6A6000C2131 /* vomitingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1573D57A2B45B6A6000C2131 /* vomitingData.swift */; };
+		157C579B2B669F8A00F744BC /* CalendarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157C579A2B669F8A00F744BC /* CalendarModel.swift */; };
 		158A55402B65D7CC009C91AE /* CustomTabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A553F2B65D7CC009C91AE /* CustomTabBarView.swift */; };
 		158A55422B65D7FC009C91AE /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A55412B65D7FC009C91AE /* MainView.swift */; };
 		158A55442B65D81F009C91AE /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A55432B65D81F009C91AE /* CalendarView.swift */; };
@@ -44,7 +47,6 @@
 		15A6F2192B37A2AB00FB9DAA /* AppetiteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2182B37A2AB00FB9DAA /* AppetiteView.swift */; };
 		15A6F21B2B37A2B900FB9DAA /* MedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F21A2B37A2B900FB9DAA /* MedicationView.swift */; };
 		15A6F21D2B37A2C800FB9DAA /* AllergiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F21C2B37A2C800FB9DAA /* AllergiesView.swift */; };
-		15A6F21F2B37A2D900FB9DAA /* BitchcycleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */; };
 		15A6F2212B37A2ED00FB9DAA /* GroomingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */; };
 		15A6F2252B37A7BA00FB9DAA /* ImagePicker .swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2242B37A7BA00FB9DAA /* ImagePicker .swift */; };
 		15A6F2282B383CAE00FB9DAA /* DogAppetiteData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A6F2272B383CAE00FB9DAA /* DogAppetiteData.swift */; };
@@ -106,6 +108,8 @@
 		153427D32B482B3300E60D77 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1538CC082B45DC540062E345 /* AppetiteCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppetiteCardView.swift; sourceTree = "<group>"; };
 		1538CC0A2B4710830062E345 /* ScheduledNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledNotificationsView.swift; sourceTree = "<group>"; };
+		154DE30A2B6C5AC6007D72D7 /* dump.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dump.swift; sourceTree = "<group>"; };
+		1558BAD02B6DC4470077687B /* CalendarPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarPlayground.swift; sourceTree = "<group>"; };
 		1573D5642B4051BE000C2131 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		1573D5662B4051E0000C2131 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		1573D56A2B405223000C2131 /* AddEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEntryView.swift; sourceTree = "<group>"; };
@@ -117,6 +121,7 @@
 		1573D5762B435EC2000C2131 /* VomitingCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VomitingCardView.swift; sourceTree = "<group>"; };
 		1573D5782B45A837000C2131 /* SecondDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondDashboardView.swift; sourceTree = "<group>"; };
 		1573D57A2B45B6A6000C2131 /* vomitingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = vomitingData.swift; sourceTree = "<group>"; };
+		157C579A2B669F8A00F744BC /* CalendarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarModel.swift; sourceTree = "<group>"; };
 		158A553F2B65D7CC009C91AE /* CustomTabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBarView.swift; sourceTree = "<group>"; };
 		158A55412B65D7FC009C91AE /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		158A55432B65D81F009C91AE /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
@@ -132,7 +137,6 @@
 		15A6F2182B37A2AB00FB9DAA /* AppetiteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppetiteView.swift; sourceTree = "<group>"; };
 		15A6F21A2B37A2B900FB9DAA /* MedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationView.swift; sourceTree = "<group>"; };
 		15A6F21C2B37A2C800FB9DAA /* AllergiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllergiesView.swift; sourceTree = "<group>"; };
-		15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitchcycleView.swift; sourceTree = "<group>"; };
 		15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroomingView.swift; sourceTree = "<group>"; };
 		15A6F2242B37A7BA00FB9DAA /* ImagePicker .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ImagePicker .swift"; sourceTree = "<group>"; };
 		15A6F2262B37A83300FB9DAA /* Valet-local-data-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Valet-local-data-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -237,6 +241,7 @@
 				1573D56C2B4052AE000C2131 /* CardModel.swift */,
 				1573D5642B4051BE000C2131 /* DataModel.swift */,
 				153427D32B482B3300E60D77 /* AppDelegate.swift */,
+				157C579A2B669F8A00F744BC /* CalendarModel.swift */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -258,10 +263,8 @@
 				15A6F2202B37A2ED00FB9DAA /* GroomingView.swift */,
 				150A85B32B58194000298552 /* GroomingCardView.swift */,
 				158E49EC2B3A181500681298 /* BehaviorView.swift */,
-				15A6F21E2B37A2D900FB9DAA /* BitchcycleView.swift */,
 				158E49EE2B3A20EB00681298 /* SavedResultsView.swift */,
 				1573D5662B4051E0000C2131 /* CardView.swift */,
-				1573D56E2B406E61000C2131 /* FilterView.swift */,
 				1573D5722B4077E7000C2131 /* MenuSelectionView.swift */,
 				1573D5782B45A837000C2131 /* SecondDashboardView.swift */,
 				1538CC0A2B4710830062E345 /* ScheduledNotificationsView.swift */,
@@ -269,7 +272,10 @@
 				158A553F2B65D7CC009C91AE /* CustomTabBarView.swift */,
 				158A55412B65D7FC009C91AE /* MainView.swift */,
 				158A55432B65D81F009C91AE /* CalendarView.swift */,
+				1573D56E2B406E61000C2131 /* FilterView.swift */,
 				158A55452B65D82D009C91AE /* ProfileView.swift */,
+				154DE30A2B6C5AC6007D72D7 /* dump.swift */,
+				1558BAD02B6DC4470077687B /* CalendarPlayground.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -407,7 +413,6 @@
 				1573D5752B433276000C2131 /* PoopingCardView.swift in Sources */,
 				15A6F2282B383CAE00FB9DAA /* DogAppetiteData.swift in Sources */,
 				150A85B42B58194000298552 /* GroomingCardView.swift in Sources */,
-				15A6F21F2B37A2D900FB9DAA /* BitchcycleView.swift in Sources */,
 				15A6F21B2B37A2B900FB9DAA /* MedicationView.swift in Sources */,
 				158F78CA2B4DAE7400CF0B35 /* MedicationCardView.swift in Sources */,
 				1519B7D12B56FC9F001A72F9 /* AllergiesCardView.swift in Sources */,
@@ -423,15 +428,18 @@
 				15E5F0B82B61796900707F3F /* TimelineProv.swift in Sources */,
 				158A55462B65D82D009C91AE /* ProfileView.swift in Sources */,
 				1519B7CF2B56B0F9001A72F9 /* AllergiesData.swift in Sources */,
+				157C579B2B669F8A00F744BC /* CalendarModel.swift in Sources */,
 				158E49EF2B3A20EB00681298 /* SavedResultsView.swift in Sources */,
 				15E533352B61D42400B9BECD /* intentTest.swift in Sources */,
 				15A6F20F2B379D2600FB9DAA /* poopingView.swift in Sources */,
 				1538CC092B45DC540062E345 /* AppetiteCardView.swift in Sources */,
 				158E49ED2B3A181500681298 /* BehaviorView.swift in Sources */,
 				15A6F2192B37A2AB00FB9DAA /* AppetiteView.swift in Sources */,
+				1558BAD12B6DC4470077687B /* CalendarPlayground.swift in Sources */,
 				158E49EB2B39DA9500681298 /* ImagePickerAllergy.swift in Sources */,
 				15A6F2252B37A7BA00FB9DAA /* ImagePicker .swift in Sources */,
 				15A6F2212B37A2ED00FB9DAA /* GroomingView.swift in Sources */,
+				154DE30B2B6C5AC6007D72D7 /* dump.swift in Sources */,
 				1573D57B2B45B6A6000C2131 /* vomitingData.swift in Sources */,
 				1524AB522B34A8B200E6ED38 /* ContentView.swift in Sources */,
 				15A6F2172B37A29600FB9DAA /* VomitingView.swift in Sources */,

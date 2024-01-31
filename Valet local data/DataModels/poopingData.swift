@@ -11,6 +11,7 @@ enum Consistency: String, CaseIterable, Codable {
 
 // PoopingData struct
 struct PoopingData: Codable {
+    let id: UUID = UUID()
     var lastPoopedDateTime: Date?
     var consist: Consistency
     var consistComment: String

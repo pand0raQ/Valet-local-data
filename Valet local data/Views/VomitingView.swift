@@ -78,17 +78,44 @@ struct VomitingView: View {
         }
 
     private func saveData() {
-            if let imageData = inputImage?.jpegData(compressionQuality: 1.0) {
-                UserDefaults.standard.set(imageData, forKey: "vomitImageData")
-            }
-
-            if let encoded = try? JSONEncoder().encode(vomitingData) {
-                UserDefaults.standard.set(encoded, forKey: "VomitingData")
-            }
-
-            saveAlertMessage = "Data saved successfully!"
-            showingSaveAlert = true
+        // Attempt to save image data if available
+        if let imageData = inputImage?.jpegData(compressionQuality: 1.0) {
+            UserDefaults.standard.set(imageData, forKey: "vomitImageData") // Consider using a unique key for each image
+            print("Image data saved successfully.")
+        } else {
+            print("No image data to save.")
         }
+
+        // Load existing vomiting data
+        var existingData = loadVomitingData()
+        print("Loaded existing vomiting data: \(existingData.count) entries found.")
+
+        // Append new vomiting data
+        existingData.append(vomitingData)
+        print("Appended new vomiting data, total entries now: \(existingData.count).")
+
+        // Encode and save the updated array to UserDefaults
+        if let encoded = try? JSONEncoder().encode(existingData) {
+            UserDefaults.standard.set(encoded, forKey: "VomitingDataArray")
+            print("Vomiting data array saved successfully with \(existingData.count) entries.")
+        } else {
+            print("Failed to encode vomiting data array.")
+        }
+
+        saveAlertMessage = "Data saved successfully!"
+        showingSaveAlert = true
+        print("Save button tapped")
+    }
+
+
+    private func loadVomitingData() -> [VomitingData] {
+        guard let savedData = UserDefaults.standard.data(forKey: "VomitingDataArray"),
+              let decodedData = try? JSONDecoder().decode([VomitingData].self, from: savedData) else {
+            return []
+        }
+        return decodedData
+    }
+
     
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()

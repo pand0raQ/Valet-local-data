@@ -1,25 +1,19 @@
-//
-//  AppetiteCardView.swift
-//  Valet local data
-//
-//  Created by Анастасия Степаносова on 03.01.2024.
-//
 
 import SwiftUI
 
 struct AppetiteCardView: View {
-    @State private var lastRecordedAppetite: DogAppetiteRecord?
+    @State private var appetiteRecords: [DogAppetiteRecord] = [] // Updated to handle an array of records
     @State private var navigateToAppetiteView = false  // State to control navigation
 
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 VStack(alignment: .leading) {
-                    // Display last food and water given
-                    if let appetiteRecord = lastRecordedAppetite {
-                        Text("Food given: \(appetiteRecord.foodAmount) mg")
-                        Text("Brand: \(appetiteRecord.foodBrand)")
-                        Text("Water given: \(appetiteRecord.waterIntake) ml")
+                    // Display last food and water given from the most recent record
+                    if let mostRecentRecord = appetiteRecords.last {
+                        Text("Food given: \(mostRecentRecord.foodAmount) mg")
+                        Text("Brand: \(mostRecentRecord.foodBrand)")
+                        Text("Water given: \(mostRecentRecord.waterIntake) ml")
                     } else {
                         Text("No data saved")
                     }
@@ -45,7 +39,7 @@ struct AppetiteCardView: View {
             }
         }
         .onAppear {
-            lastRecordedAppetite = loadFromUserDefaults()
+            loadFromUserDefaults()
         }
         .padding()
         .frame(maxWidth: .infinity)
@@ -55,22 +49,14 @@ struct AppetiteCardView: View {
         .padding()
     }
 
-    private func loadFromUserDefaults() -> DogAppetiteRecord? {
-        if let savedData = UserDefaults.standard.data(forKey: "DogAppetiteRecord"),
-           let savedAppetiteRecord = try? JSONDecoder().decode(DogAppetiteRecord.self, from: savedData) {
-            return savedAppetiteRecord
+    private func loadFromUserDefaults() {
+        // Updated to load an array of DogAppetiteRecord
+        if let savedData = UserDefaults.standard.data(forKey: "DogAppetiteRecordsArray"),
+           let savedRecords = try? JSONDecoder().decode([DogAppetiteRecord].self, from: savedData) {
+            appetiteRecords = savedRecords
+        } else {
+            appetiteRecords = [] // Ensure array is clear if no data is found
         }
-        return nil
     }
 }
 
-struct AppetiteCardView_Previews: PreviewProvider {
-    static var previews: some View {
-        AppetiteCardView()
-    }
-}
-
-
-#Preview {
-    AppetiteCardView()
-}

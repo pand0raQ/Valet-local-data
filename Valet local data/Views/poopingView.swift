@@ -8,7 +8,6 @@ struct PoopingView: View {
     @State private var showingSaveConfirmation = false
     @State private var showingConsistencyAlert = false
     @State private var temporaryConsistencyComment = ""
-    
     var body: some View {
         NavigationView {
             Form {
@@ -21,7 +20,6 @@ struct PoopingView: View {
                 .onChange(of: datePickerDate) { newValue in
                     poopingData.lastPoopedDateTime = newValue
                 }
-                
                 Section(header: Text("Consistency").font(.footnote)) {
                     Picker("Select Consistency", selection: $poopingData.consist) {
                         ForEach(Consistency.allCases, id: \.self) { value in
@@ -35,7 +33,6 @@ struct PoopingView: View {
                         showingConsistencyAlert = true
                     }
                 }
-                
                 TextField("Color", text: $poopingData.color)
                 
                 HStack {
@@ -50,15 +47,14 @@ struct PoopingView: View {
                     .buttonStyle(.borderedProminent)
                     .tint(.green)
                     Spacer()
-            
                 }
-                
                 .padding(.vertical)
             }
             .onAppear {
-                if let loadedData = PoopingDataManager.shared.loadFromUserDefaults() {
-                    poopingData = loadedData
-                    datePickerDate = loadedData.lastPoopedDateTime ?? Date()
+                let allPoopingData = PoopingDataManager.shared.loadAllPoopingData()
+                if let mostRecentData = allPoopingData.last {
+                    poopingData = mostRecentData
+                    datePickerDate = mostRecentData.lastPoopedDateTime ?? Date()
                 }
             }
             .alert(isPresented: $showingSaveConfirmation) {
@@ -75,10 +71,6 @@ struct PoopingView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-    
-    
-    
-    
     private func resetForm() {
         poopingData = PoopingData()
         datePickerDate = Date()
@@ -90,45 +82,44 @@ struct PoopingView: View {
 class PoopingDataManager {
     static let shared = PoopingDataManager()
     private let sharedUserDefaults = UserDefaults(suiteName: "group.valet.local.data")
-    
-    private init() {}
-    
-    func logCurrentPoopingData() {
-        let newPoopingData = PoopingData(
-            lastPoopedDateTime: Date(), // Current time
-            consist: .regular,         // Consistency set to regular
-            color: ""                  // Empty color
-        )
-        savePoopingData(newPoopingData)
-    }
-    
-    func savePoopingData(_ data: PoopingData) {
-        if let encoded = try? JSONEncoder().encode(data) {
-            sharedUserDefaults?.set(encoded, forKey: "PoopingData")
-            WidgetCenter.shared.reloadAllTimelines()
-        } else {
-            print("Failed to encode PoopingData")
-        }
-    }
-    func loadFromUserDefaults() -> PoopingData? {
-            if let savedData = sharedUserDefaults?.data(forKey: "PoopingData") {
-                let decoder = JSONDecoder()
-                if let loadedRecord = try? decoder.decode(PoopingData.self, from: savedData) {
-                    return loadedRecord
-                }
+
+    func savePoopingData(_ newData: PoopingData) {
+            print("Attempting to save new pooping data...")
+
+            // Load existing data
+            var existingData = loadAllPoopingData()
+            print("Currently have \(existingData.count) pooping log(s) before saving.")
+
+            // Append new data
+            existingData.append(newData)
+
+            // Encode and save the updated array
+            do {
+                let encoded = try JSONEncoder().encode(existingData)
+                sharedUserDefaults?.set(encoded, forKey: "PoopingDataArray")
+                print("Successfully saved new pooping data. Total logs: \(existingData.count)")
+            } catch {
+                print("Failed to encode PoopingData with error: \(error)")
             }
-            return nil
+
+            // Optionally, you could also print the newly saved data for debugging purposes
+            if let savedData = sharedUserDefaults?.data(forKey: "PoopingDataArray"), let decodedData = try? JSONDecoder().decode([PoopingData].self, from: savedData) {
+                print("Decoded saved pooping data: \(decodedData)")
+            } else {
+                print("Could not fetch saved pooping data after saving.")
+            }
         }
+
+        // Make sure the loadAllPoopingData() method is correctly implemented as well.
     
-  
+
+    func loadAllPoopingData() -> [PoopingData] {
+        guard let savedData = sharedUserDefaults?.data(forKey: "PoopingDataArray"),
+              let decodedData = try? JSONDecoder().decode([PoopingData].self, from: savedData) else {
+            return []
+        }
+        return decodedData
+    }
 }
 
 
-/*
- Button("Log Current Poop") {
-     PoopingDataManager.shared.logCurrentPoopingData()
-     showingSaveConfirmation = true
- }
- .buttonStyle(.borderedProminent)
- .tint(.blue)
- */

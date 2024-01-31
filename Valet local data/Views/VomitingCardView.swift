@@ -66,20 +66,19 @@ struct VomitingCardView: View {
     
 
     private func loadFromUserDefaults() -> VomitingData? {
-        if let savedData = UserDefaults.standard.data(forKey: "VomitingData") {
-            let decoder = JSONDecoder()
-            if let loadedRecord = try? decoder.decode(VomitingData.self, from: savedData) {
-                return loadedRecord
-            }
+        guard let savedData = UserDefaults.standard.data(forKey: "VomitingDataArray") else { return nil }
+        let decoder = JSONDecoder()
+        if let loadedRecords = try? decoder.decode([VomitingData].self, from: savedData), !loadedRecords.isEmpty {
+            return loadedRecords.last // Return the most recent entry
         }
         return nil
     }
+
     
     
     struct VomitingImageView: View {
         var body: some View {
-            
-            if let savedImageData = UserDefaults.standard.data(forKey: "vomitImageData"),
+            if let savedImageData = UserDefaults.standard.data(forKey: "vomitImageData"), // This key should ideally be unique for each vomiting entry
                let uiImage = UIImage(data: savedImageData) {
                 Image(uiImage: uiImage)
                     .resizable()
@@ -91,6 +90,7 @@ struct VomitingCardView: View {
             }
         }
     }
+
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short

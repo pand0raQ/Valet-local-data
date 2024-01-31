@@ -1,16 +1,9 @@
-//
-//  AppetiteView.swift
-//  Valet local data
-//
-//  Created by Анастасия Степаносова on 24.12.2023.
-//
 
 import SwiftUI
-
 struct AppetiteView: View {
-    @State private var appetiteRecord = DogAppetiteRecord()
+    @State private var appetiteRecord = DogAppetiteRecord() // For recording a new entry
     @State private var showingSaveConfirmation = false
-    @State private var lastRecordedAppetite: DogAppetiteRecord?
+    @State private var appetiteRecords: [DogAppetiteRecord] = [] // Holds all records
 
     var body: some View {
         NavigationView {
@@ -25,44 +18,50 @@ struct AppetiteView: View {
                 }
                 
                 HStack {
-                    Spacer() // Spacer before the button for centering
+                    Spacer()
                     Button("Save") {
                         saveAppetiteRecord()
                     }
-                    .buttonStyle(.borderedProminent) // Bordered and prominent style
-                    .tint(.green) // Green color
-                    Spacer() // Spacer after the button for centering
+                    .buttonStyle(.borderedProminent)
+                    .tint(.green)
+                    Spacer()
                 }
-               // .padding(.vertical) // Add vertical padding for spacing
-                
-      
             }
             .navigationBarTitle("Appetite Tracking")
-            .onAppear(perform: loadLastRecordedData)
+            .onAppear {
+                loadLastRecordedData()
+            }
             .alert(isPresented: $showingSaveConfirmation) {
                 Alert(title: Text("Data saved successfully"), dismissButton: .default(Text("OK")))
             }
         }
     }
-
+    
     private func saveAppetiteRecord() {
         var recordToSave = appetiteRecord
         // Convert strings to integers before saving
         recordToSave.foodAmount = String(Int(appetiteRecord.foodAmount) ?? 0)
         recordToSave.waterIntake = String(Int(appetiteRecord.waterIntake) ?? 0)
 
-        if let encoded = try? JSONEncoder().encode(recordToSave) {
-            UserDefaults.standard.set(encoded, forKey: "DogAppetiteRecord")
+        // Fetch existing records and append new record
+        var existingRecords = loadLastRecordedData()
+        existingRecords.append(recordToSave)
+
+        // Encode and save the updated array back to UserDefaults
+        if let encoded = try? JSONEncoder().encode(existingRecords) {
+            UserDefaults.standard.set(encoded, forKey: "DogAppetiteRecordsArray")
             showingSaveConfirmation = true
-            lastRecordedAppetite = recordToSave
+            appetiteRecords = existingRecords // Update state with new list
         }
     }
-
-    private func loadLastRecordedData() {
-        if let savedData = UserDefaults.standard.data(forKey: "DogAppetiteRecord"),
-           let savedAppetiteRecord = try? JSONDecoder().decode(DogAppetiteRecord.self, from: savedData) {
-            lastRecordedAppetite = savedAppetiteRecord
+    
+    private func loadLastRecordedData() -> [DogAppetiteRecord] {
+        guard let savedData = UserDefaults.standard.data(forKey: "DogAppetiteRecordsArray"),
+              let savedRecords = try? JSONDecoder().decode([DogAppetiteRecord].self, from: savedData) else {
+            return []
         }
+        appetiteRecords = savedRecords // Update the state with loaded records
+        return savedRecords
     }
 }
 

@@ -17,7 +17,8 @@ struct ContentView: View {
     
     var body: some View {
         NavigationView {
-            MainView()
+           MainView()
+         //   CalendarView()
           //  DashboardView(medications: $medications, groomingViewModel: groomingViewModel) // Pass groomingData here
         }
         .onAppear {
