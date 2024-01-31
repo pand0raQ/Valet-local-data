@@ -8,7 +8,6 @@ struct PoopingView: View {
     @State private var showingSaveConfirmation = false
     @State private var showingConsistencyAlert = false
     @State private var temporaryConsistencyComment = ""
-    
     var body: some View {
         NavigationView {
             Form {
@@ -21,7 +20,6 @@ struct PoopingView: View {
                 .onChange(of: datePickerDate) { newValue in
                     poopingData.lastPoopedDateTime = newValue
                 }
-                
                 Section(header: Text("Consistency").font(.footnote)) {
                     Picker("Select Consistency", selection: $poopingData.consist) {
                         ForEach(Consistency.allCases, id: \.self) { value in
@@ -35,7 +33,6 @@ struct PoopingView: View {
                         showingConsistencyAlert = true
                     }
                 }
-                
                 TextField("Color", text: $poopingData.color)
                 
                 HStack {
@@ -50,9 +47,7 @@ struct PoopingView: View {
                     .buttonStyle(.borderedProminent)
                     .tint(.green)
                     Spacer()
-            
                 }
-                
                 .padding(.vertical)
             }
             .onAppear {
@@ -75,10 +70,6 @@ struct PoopingView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
     }
-    
-    
-    
-    
     private func resetForm() {
         poopingData = PoopingData()
         datePickerDate = Date()
@@ -90,9 +81,7 @@ struct PoopingView: View {
 class PoopingDataManager {
     static let shared = PoopingDataManager()
     private let sharedUserDefaults = UserDefaults(suiteName: "group.valet.local.data")
-    
     private init() {}
-    
     func logCurrentPoopingData() {
         let newPoopingData = PoopingData(
             lastPoopedDateTime: Date(), // Current time
@@ -101,7 +90,6 @@ class PoopingDataManager {
         )
         savePoopingData(newPoopingData)
     }
-    
     func savePoopingData(_ data: PoopingData) {
         if let encoded = try? JSONEncoder().encode(data) {
             sharedUserDefaults?.set(encoded, forKey: "PoopingData")
@@ -124,11 +112,3 @@ class PoopingDataManager {
 }
 
 
-/*
- Button("Log Current Poop") {
-     PoopingDataManager.shared.logCurrentPoopingData()
-     showingSaveConfirmation = true
- }
- .buttonStyle(.borderedProminent)
- .tint(.blue)
- */

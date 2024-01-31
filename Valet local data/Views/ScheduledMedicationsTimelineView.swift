@@ -28,15 +28,24 @@ struct ScheduledMedicationsTimelineView: View {
         if let medicationIndex = medications.firstIndex(where: { $0.id == medication.id }) {
             if let timeIndex = medications[medicationIndex].dailyTimes?.firstIndex(where: { $0.id == time.id }) {
                 medications[medicationIndex].dailyTimes?[timeIndex].administered = time.administered
+                print("Updated daily time: \(time.date) - Administered: \(time.administered)")
             } else if let timeIndex = medications[medicationIndex].irregularTimes?.firstIndex(where: { $0.id == time.id }) {
                 medications[medicationIndex].irregularTimes?[timeIndex].administered = time.administered
+                print("Updated irregular time: \(time.date) - Administered: \(time.administered)")
             }
             saveMedications()
         }
     }
 
     private func saveMedications() {
-        // Implement your saving logic here, such as encoding and saving to UserDefaults
+        do {
+            let encoder = JSONEncoder()
+            let encodedMedications = try encoder.encode(medications)
+            UserDefaults.standard.set(encodedMedications, forKey: "SavedMedications")
+            print("Medications successfully saved.")
+        } catch {
+            print("Error saving medications: \(error)")
+        }
     }
 }
 
