@@ -8,11 +8,14 @@ enum LogType: CaseIterable {
     case allergies
     case grooming
     case medication
+    case detpoop
+
     // Add other cases as needed, each with potentially an emoji property or similar identifier.
     
     var emoji: String {
         switch self {
             case .poop: return "💩"
+        case .detpoop: return "🚿"
             case .vomit: return "🤮"
         case .appetite: return "🍽"
         case .allergies: return "🤧"

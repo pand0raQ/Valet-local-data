@@ -1,9 +1,9 @@
 
+
 import Foundation
 
 // Define an enum for consistency options
 enum Consistency: String, CaseIterable, Codable {
-    case regular = "Regular"
     case constipation = "Constipation"
     case droopy = "Droopy"
     case diarrhoea = "Diarrhoea"
@@ -16,16 +16,19 @@ struct PoopingData: Codable {
     var consist: Consistency
     var consistComment: String
     var color: String
+    var isDetailed: Bool // Add this line to include the isDetailed property
 
     // Initializer
     init(lastPoopedDateTime: Date? = nil,
-         consist: Consistency = .regular,
+         consist: Consistency = .constipation,
          consistComment: String = "",
-         color: String = "") {
+         color: String = "",
+         isDetailed: Bool = false) { // Modify this line to include the isDetailed parameter
         self.lastPoopedDateTime = lastPoopedDateTime
         self.consist = consist
         self.consistComment = consistComment
         self.color = color
+        self.isDetailed = isDetailed // Add this line to initialize the isDetailed property
     }
 
     func poopedInLast24Hours() -> Bool {
@@ -34,4 +37,3 @@ struct PoopingData: Codable {
                Calendar.current.isDateInToday(lastPooped)
     }
 }
-

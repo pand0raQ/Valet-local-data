@@ -220,10 +220,21 @@ extension CalendarView {
     func logTypes(for date: Date) -> [LogType] {
         var types: [LogType] = []
         
-        // Example existence checks
-        if hasPoopLogs(for: date) {
-            types.append(.poop)
+        let poopingLogs = PoopingDataManager.shared.loadAllPoopingData().filter { poopingData in
+            guard let logDate = poopingData.lastPoopedDateTime else { return false }
+            return Calendar.current.isDate(logDate, inSameDayAs: date)
         }
+        
+        // Determine if any log is a detailed pooping log
+        for poopingLog in poopingLogs {
+            if poopingLog.isDetailed {
+                types.append(.detpoop)
+            } else {
+                types.append(.poop)
+            }
+        }
+    
+        
         if hasVomitLogs(for: date) {
             types.append(.vomit)
         }
@@ -243,6 +254,8 @@ extension CalendarView {
         
         return types
     }
+    
+
     
     private func hasPoopLogs(for date: Date) -> Bool {
         // Check if the set of pooping log dates contains the given date
@@ -521,7 +534,3 @@ extension Calendar {
       }
     
   }
-
-
-
-

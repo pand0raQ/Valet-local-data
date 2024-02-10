@@ -3,11 +3,12 @@ import SwiftUI
 @main
 struct MyApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @State  var poopingLogs: [PoopingData] = []
 
 
     var body: some Scene {
         WindowGroup {
-           ContentView()  // Your main view
+            ContentView(poopingLogs: poopingLogs)  // Your main view
           //  MedicationView()
         }
     }

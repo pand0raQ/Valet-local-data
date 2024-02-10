@@ -1,4 +1,3 @@
-
 import SwiftUI
 import WidgetKit
 
@@ -8,6 +7,8 @@ struct PoopingView: View {
     @State private var showingSaveConfirmation = false
     @State private var showingConsistencyAlert = false
     @State private var temporaryConsistencyComment = ""
+    @State private var viewMode: Int = 0 // Add this state variable to toggle between views
+
     var body: some View {
         NavigationView {
             Form {
@@ -20,29 +21,41 @@ struct PoopingView: View {
                 .onChange(of: datePickerDate) { newValue in
                     poopingData.lastPoopedDateTime = newValue
                 }
-                Section(header: Text("Consistency").font(.footnote)) {
-                    Picker("Select Consistency", selection: $poopingData.consist) {
-                        ForEach(Consistency.allCases, id: \.self) { value in
-                            Text(value.rawValue).tag(value)
-                        }
-                    }
+                
+                // Add a segmented picker to switch between normal and detailed views
+                Picker("View Mode", selection: $viewMode) {
+                    Text("Normal").tag(0)
+                    Text("Detailed").tag(1)
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .onChange(of: poopingData.consist) { newValue in
-                    if newValue == .constipation || newValue == .droopy || newValue == .diarrhoea {
-                        showingConsistencyAlert = true
+                .padding(.vertical)
+                
+                // Only show the following sections if viewMode is 1 (detailed view)
+                if viewMode == 1 {
+                    Section(header: Text("Consistency").font(.footnote)) {
+                        Picker("Select Consistency", selection: $poopingData.consist) {
+                            ForEach(Consistency.allCases, id: \.self) { value in
+                                Text(value.rawValue).tag(value)
+                            }
+                        }
                     }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .onChange(of: poopingData.consist) { newValue in
+                        if newValue == .constipation || newValue == .droopy || newValue == .diarrhoea {
+                            showingConsistencyAlert = true
+                        }
+                    }
+                    TextField("Color", text: $poopingData.color)
                 }
-                TextField("Color", text: $poopingData.color)
                 
                 HStack {
                     Spacer()
                     Button("Save") {
+                        poopingData.isDetailed = viewMode == 1
+
                         PoopingDataManager.shared.savePoopingData(poopingData)
                         WidgetCenter.shared.reloadAllTimelines()
                         showingSaveConfirmation = true
-                        
-                        
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.green)
@@ -75,8 +88,9 @@ struct PoopingView: View {
         poopingData = PoopingData()
         datePickerDate = Date()
     }
-    
 }
+
+
 
 
 class PoopingDataManager {
