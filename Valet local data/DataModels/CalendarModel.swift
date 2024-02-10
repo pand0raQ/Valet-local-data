@@ -14,6 +14,9 @@ enum LogType: CaseIterable {
         switch self {
             case .poop: return "💩"
             case .vomit: return "🤮"
+        case .appetite: return "🍽"
+        case .allergies: return "🤧"
+        case .medication: return "💊"
             // Define emojis or other identifiers for other log types
             default: return "🔖" // Placeholder for undefined types
         }

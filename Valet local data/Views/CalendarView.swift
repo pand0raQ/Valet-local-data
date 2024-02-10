@@ -1,5 +1,4 @@
 
-
 import SwiftUI
 extension View {
     func debugPrint(_ value: Any) -> some View {
@@ -72,9 +71,11 @@ struct CalendarView: View {
                     CustomCalendar(
                             selectedDate: $selectedDate,
                             showingSheet: $showingSheet,
-                            poopingLogDates: Set(), // Assuming you need to provide a set of dates for pooping logs
-                            vomitLogDates: Set(), // Assuming you need to provide a set of dates for vomit logs
-                            appetiteLogDates: Set(), // Assuming you need to provide a set for appetite logs
+                            poopingLogDates: Set(),
+                            vomitLogDates: Set(),
+                            appetiteLogDates: Set(),
+                            allergiesLogDates: Set(),
+                            medLogDated : Set(),
                             getLogTypes: logTypes
                         )
                     .onChange(of: selectedDate) { newDate in
@@ -113,14 +114,18 @@ struct CustomCalendar: View {
     @Binding var showingSheet: Bool // This line is added to accept the binding from the parent view
     let calendar = Calendar.current
     var poopingLogDates: Set<Date>
-      var vomitLogDates: Set<Date>
-      var appetiteLogDates: Set<Date>
+    var vomitLogDates: Set<Date>
+    var appetiteLogDates: Set<Date>
+    var allergiesLogDates: Set<Date>
+    var medLogDated: Set<Date>
+
+    
     var getLogTypes: (Date) -> [LogType]
 
 
 
     var body: some View {
-   
+   //month selector part
             HStack {
                 Button(action: { self.moveMonth(by: -1) }) {
                     Image(systemName: "chevron.left")
@@ -134,7 +139,8 @@ struct CustomCalendar: View {
                 }
             }
             .padding()
-            
+    //month selector part
+
         
         LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 7), spacing: 0) {
             ForEach(daysInMonth(for: selectedDate), id: \.self) { date in
@@ -203,25 +209,41 @@ struct DetailsView: View {
 }
 
 
-extension CalendarView {
-    func logTypes(for date: Date) -> [LogType] {
-          var types: [LogType] = []
-          
-          // Example existence checks
-          if hasPoopLogs(for: date) {
-              types.append(.poop)
-          }
-          if hasVomitLogs(for: date) {
-              types.append(.vomit)
-          }
-          if hasAppetiteLogs(for: date) {
-              types.append(.appetite)
-          }
 
-          // Add more checks as needed
-          
-          return types
-      }
+
+
+
+
+
+extension CalendarView {
+    
+    func logTypes(for date: Date) -> [LogType] {
+        var types: [LogType] = []
+        
+        // Example existence checks
+        if hasPoopLogs(for: date) {
+            types.append(.poop)
+        }
+        if hasVomitLogs(for: date) {
+            types.append(.vomit)
+        }
+        if hasAppetiteLogs(for: date) {
+            types.append(.appetite)
+        }
+        if hasAllergyLogs(for: date) {
+            types.append(.allergies)
+        }
+        
+        if hasMedLogs(for: date) {
+            types.append(.medication)
+        }
+        
+        
+        // Add more checks as needed
+        
+        return types
+    }
+    
     private func hasPoopLogs(for date: Date) -> Bool {
         // Check if the set of pooping log dates contains the given date
         return poopingLogDates.contains { logDate in
@@ -240,21 +262,30 @@ extension CalendarView {
         return hasAppetiteLogs.contains { logDate in
             Calendar.current.isDate(logDate, inSameDayAs: date)
         }
-       }
- 
+    }
+    func hasAllergyLogs(for date: Date) -> Bool {
+        return allergyLogDates.contains { logDate in
+            Calendar.current.isDate(logDate, inSameDayAs: date)
+        }
+    }
+    func hasMedLogs(for date: Date) -> Bool {
+        return medLogDates.contains { logDate in
+            Calendar.current.isDate(logDate, inSameDayAs: date)
+        }
+    }
     
     var poopingLogDates: Set<Date> {
-          var dates = Set<Date>()
-          
-          // Assuming PoopingData has a `lastPoopedDateTime` property of type Date
-          let poopingLogs: [PoopingData] = fetchLogs(for: .poop)
-          for log in poopingLogs {
-              if let date = log.lastPoopedDateTime {
-                  dates.insert(date)
-              }
-          }
-          return dates
-      }
+        var dates = Set<Date>()
+        
+        // Assuming PoopingData has a `lastPoopedDateTime` property of type Date
+        let poopingLogs: [PoopingData] = fetchLogs(for: .poop)
+        for log in poopingLogs {
+            if let date = log.lastPoopedDateTime {
+                dates.insert(date)
+            }
+        }
+        return dates
+    }
     var vomitingLogDates: Set<Date> {
         var dates = Set<Date>()
         
@@ -274,29 +305,77 @@ extension CalendarView {
         }
         return dates
     }
+    var allergyLogDates: Set<Date> {
+        var dates = Set<Date>()
+        
+        let rashLogs: [RashData] = fetchLogs(for: .allergies)
+        for log in rashLogs {
+            dates.insert(log.dater)
+        }
+        
+        let scratchingLogs: [ScratchingIntensityEntry] = fetchLogs(for: .allergies)
+        for log in scratchingLogs {
+            dates.insert(log.datescr)
+        }
+        
+        let eyesLogs: [EyesData] = fetchLogs(for: .allergies)
+        for log in eyesLogs {
+            dates.insert(log.dateeye)
+        }
+        
+        return dates
+    }
+    var medLogDates: Set<Date> {
+        var dates = Set<Date>()
+        
+        let medicationLogs: [AppModels.DogMedicationRecord] = fetchLogs(for: .medication)
+        for log in medicationLogs {
+            if let dailyTimes = log.dailyTimes {
+                for time in dailyTimes {
+                    if time.administered {
+                        dates.insert(time.date)
+                    }
+                }
+            }
+            if let irregularTimes = log.irregularTimes {
+                for time in irregularTimes {
+                    if time.administered {
+                        dates.insert(time.date)
+                    }
+                }
+            }
+        }
+        
+        return dates
+    }
 
-
+    
+    
     
     private func fetchLogs<T: Codable>(for type: LogType) -> [T] {
         print("Fetching logs for type: \(type)")
         
-        let key: String
+        var keys: [String] = []
         var userDefaults: UserDefaults?
         
         switch type {
         case .poop:
-            key = "PoopingDataArray"
+            keys = ["PoopingDataArray"]
             userDefaults = UserDefaults(suiteName: "group.valet.local.data")
         case .vomit:
-            key = "VomitingDataArray"
+            keys = ["VomitingDataArray"]
             userDefaults = .standard
         case .appetite:
-            key = "DogAppetiteRecordsArray"
-            // Assuming this is in the standard UserDefaults
+            keys = ["DogAppetiteRecordsArray"]
             userDefaults = .standard
-        case .allergies, .grooming, .medication:
-            key = "SomeKeyBasedOnType"
-            // Decide based on type, for example:
+        case .allergies:
+            keys = ["RashDataEntries", "ScratchingIntensityDataEntries", "EyesDataEntries"]
+            userDefaults = .standard
+        case .medication:
+            keys = ["SavedMedications"]
+            userDefaults = .standard
+        case .grooming :
+            keys = ["SomeKeyBasedOnType"]
             userDefaults = type == .allergies ? .standard : UserDefaults(suiteName: "group.valet.local.data")
         default:
             print("Log type not found")
@@ -308,50 +387,64 @@ extension CalendarView {
             return []
         }
         
-        // Decode and return the logs for the specified key
         let decoder = JSONDecoder()
-        if let savedData = defaults.data(forKey: key) {
-            do {
-                let decodedArray = try decoder.decode([T].self, from: savedData)
-                return decodedArray
-            } catch {
-                print("Error decoding data for key \(key): \(error)")
+        var decodedArray: [T] = []
+        
+        for key in keys {
+            if let savedData = defaults.data(forKey: key) {
+                do {
+                    let decoded = try decoder.decode([T].self, from: savedData)
+                    decodedArray += decoded
+                } catch {
+                    print("Error decoding data for key \(key): \(error)")
+                }
+            } else {
+                print("No data found for key: \(key)")
             }
-        } else {
-            print("No data found for key: \(key)")
         }
         
-        return [] // Return an empty array if no data is found or if an error occurs
+        return decodedArray
     }
-
+    
+    
     private func filteredLogs(for selectedDate: Date) -> [DogLog] {
         var allLogs = [DogLog]()
-
+        
         // Fetch and convert logs
         let poopingLogs: [PoopingData] = fetchLogs(for: .poop)
         allLogs += poopingLogs.map(convertPoopingDataToDogLog)
-
+        
         let vomitingLogs: [VomitingData] = fetchLogs(for: .vomit)
         allLogs += vomitingLogs.map(convertVomitingDataToDogLog)
         
         let appetiteLogs: [DogAppetiteRecord] = fetchLogs(for: .appetite)
         allLogs += appetiteLogs.map(convertAppetiteDataToDogLog)
-
-        // Assume similar conversion for other log types and add them to allLogs
-
-        // Filter logs to include only those that match the selectedDate
+        
+        let rashLogs: [RashData] = fetchLogs(for: .allergies)
+        allLogs += rashLogs.map(convertRashDataToDogLog)
+        
+        let scratchingLogs: [ScratchingIntensityEntry] = fetchLogs(for: .allergies)
+        allLogs += scratchingLogs.map(convertScratchingIntensityEntryToDogLog)
+        
+        let eyesLogs: [EyesData] = fetchLogs(for: .allergies)
+        allLogs += eyesLogs.map(convertEyesDataToDogLog)
+        
+        let medicationLogs: [AppModels.DogMedicationRecord] = fetchLogs(for: .medication)
+            allLogs.append(contentsOf: medicationLogs.flatMap(convertMedicationDataToDogLog))
+        
+        
         let calendar = Calendar.current
         return allLogs.filter { log in
             calendar.isDate(log.date, inSameDayAs: selectedDate)
         }
     }
-
+    
     private func convertPoopingDataToDogLog(_ data: PoopingData) -> DogLog {
         let description = "Pooping: Consistency - \(data.consist.rawValue), Color: \(data.color)"
         let date = data.lastPoopedDateTime ?? Date()
         return DogLog(type: .poop, date: date, description: description)
     }
-
+    
     // Conversion for VomitingData
     private func convertVomitingDataToDogLog(_ data: VomitingData) -> DogLog {
         
@@ -362,20 +455,53 @@ extension CalendarView {
         let description = "Appetite: Food given \(data.foodAmount) mg of \(data.foodBrand), Water intake \(data.waterIntake) ml"
         return DogLog(type: .appetite, date: data.lastEatDateTime, description: description)
     }
+    private func convertRashDataToDogLog(_ data: RashData) -> DogLog {
+        let description = "Rash noticed - \(data.dater)"
+        return DogLog(type: .allergies, date: data.dater, description: description)
+    }
+    
+    private func convertScratchingIntensityEntryToDogLog(_ data: ScratchingIntensityEntry) -> DogLog {
+        let description = "Scratching Intensity: \(data.intensity)"
+        return DogLog(type: .allergies, date: data.datescr, description: description)
+    }
+    
+    private func convertEyesDataToDogLog(_ data: EyesData) -> DogLog {
+        let description = "Eyes: Redness - \(data.intensity)"
+        return DogLog(type: .allergies, date: data.dateeye, description: description)
+    }
+    
+    private func convertMedicationDataToDogLog(_ data: AppModels.DogMedicationRecord) -> [DogLog] {
+        var logs: [DogLog] = [] // Initialize logs as an empty array of DogLog objects
+        
+        if let dailyTimes = data.dailyTimes {
+            for time in dailyTimes {
+                if time.administered {
+                    let description = "Medication: \(data.medicationName) was administered"
+                    let log = DogLog(type: .medication, date: time.date, description: description)
+                    logs.append(log)
+                }
+            }
+        }
+        
+        if let irregularTimes = data.irregularTimes {
+            for time in irregularTimes {
+                if time.administered {
+                    let description = "Medication: \(data.medicationName) was administered"
+                    let log = DogLog(type: .medication, date: time.date, description: description)
+                    logs.append(log)
+                }
+            }
+        }
+        
+        return logs
+    }
 
-
-
     
-    
-    
-    
-    
-    
-    
-
     
 }
-
+    
+    
+    
 extension Calendar {
  
   
@@ -393,6 +519,7 @@ extension Calendar {
           }
           return dates
       }
+    
   }
 
 

@@ -231,73 +231,97 @@ struct AllergiesView: View {
         
         
         private func saveRashDataEntry() {
-              let imageData = rashImage?.jpegData(compressionQuality: 0.5)
-              let newRashData = RashData(dater: rashDate, imageData: imageData)
-              rashDataEntries.append(newRashData)
-              saveRashDataToUserDefaults()
+            let imageData = rashImage?.jpegData(compressionQuality: 0.5)
+            let newRashData = RashData(dater: rashDate, imageData: imageData)
+            
+            // Load existing data
+            var existingData = loadRashDataEntries()
+            
+            // Append new data
+            existingData.append(newRashData)
+            
+            // Save updated data
+            saveRashDataToUserDefaults(existingData)
+            
+            alertMessage = "Rash info saved"
+            showAlert = true
+        }
+        private func saveScratchingIntensityDataEntry() {
+            let newIntensityEntry = ScratchingIntensityEntry(intensity: scratchingIntensity, datescr: scratchingIntensityDate)
+            
+            // Load existing data
+            var existingData = loadScratchingIntensityDataEntries()
+            
+            // Append new data
+            existingData.append(newIntensityEntry)
+            
+            // Save updated data
+            saveScratchingIntensityDataToUserDefaults(existingData)
+            
+            alertMessage = "Scratching Intensity saved"
+            showAlert = true
+        }
 
-              alertMessage = "Rash info saved"
-              showAlert = true
-          }
-          
-          private func saveScratchingIntensityDataEntry() {
-              let newIntensityEntry = ScratchingIntensityEntry(intensity: scratchingIntensity, datescr: scratchingIntensityDate)
-              scratchingIntensityEntries.append(newIntensityEntry)
-              saveScratchingIntensityDataToUserDefaults()
-
-              alertMessage = "Scratching Intensity saved"
-              showAlert = true
-          }
-          
-          private func saveEyesDataEntry() {
-              let imageData = eyesImage?.jpegData(compressionQuality: 0.5)
-              let newEyesData = EyesData(id: UUID(), dateeye: eyesDate, intensity: eyesIntensity, imageData: imageData)
-              eyesDataEntries.append(newEyesData)
-              saveEyesDataToUserDefaults()
-
-              alertMessage = "Problem with eyes saved"
-              showAlert = true
-          }
+        private func saveEyesDataEntry() {
+            let imageData = eyesImage?.jpegData(compressionQuality: 0.5)
+            let newEyesData = EyesData(id: UUID(), dateeye: eyesDate, intensity: eyesIntensity, imageData: imageData)
+            
+            // Load existing data
+            var existingData = loadEyesDataEntries()
+            
+            // Append new data
+            existingData.append(newEyesData)
+            
+            // Save updated data
+            saveEyesDataToUserDefaults(existingData)
+            
+            alertMessage = "Problem with eyes saved"
+            showAlert = true
+        }
         
         
         // UserDefaults Persistence
-        private func saveRashDataToUserDefaults() {
-            if let data = try? JSONEncoder().encode(rashDataEntries) {
-                UserDefaults.standard.set(data, forKey: "RashDataEntries")
+        private func saveRashDataToUserDefaults(_ data: [RashData]) {
+            if let encoded = try? JSONEncoder().encode(data) {
+                UserDefaults.standard.set(encoded, forKey: "RashDataEntries")
             }
         }
-        
-        private func saveScratchingIntensityDataToUserDefaults() {
-            if let data = try? JSONEncoder().encode(scratchingIntensityEntries) {
-                UserDefaults.standard.set(data, forKey: "ScratchingIntensityDataEntries")
+
+        private func saveScratchingIntensityDataToUserDefaults(_ data: [ScratchingIntensityEntry]) {
+            if let encoded = try? JSONEncoder().encode(data) {
+                UserDefaults.standard.set(encoded, forKey: "ScratchingIntensityDataEntries")
             }
         }
-        
-        private func saveEyesDataToUserDefaults() {
-            if let data = try? JSONEncoder().encode(eyesDataEntries) {
-                UserDefaults.standard.set(data, forKey: "EyesDataEntries")
+
+        private func saveEyesDataToUserDefaults(_ data: [EyesData]) {
+            if let encoded = try? JSONEncoder().encode(data) {
+                UserDefaults.standard.set(encoded, forKey: "EyesDataEntries")
             }
         }
+
         
-        private func loadRashDataEntries() {
+        private func loadRashDataEntries() -> [RashData] {
             if let data = UserDefaults.standard.data(forKey: "RashDataEntries"),
                let savedEntries = try? JSONDecoder().decode([RashData].self, from: data) {
-                rashDataEntries = savedEntries
+                return savedEntries
             }
+            return [] // Return an empty array if no data is found
         }
         
-        private func loadScratchingIntensityDataEntries() {
+        private func loadScratchingIntensityDataEntries() -> [ScratchingIntensityEntry] {
             if let data = UserDefaults.standard.data(forKey: "ScratchingIntensityDataEntries"),
                let savedEntries = try? JSONDecoder().decode([ScratchingIntensityEntry].self, from: data) {
-                scratchingIntensityEntries = savedEntries
+                return savedEntries
             }
+            return [] // Return an empty array if no data is found
         }
         
-        private func loadEyesDataEntries() {
+        private func loadEyesDataEntries() -> [EyesData] {
             if let data = UserDefaults.standard.data(forKey: "EyesDataEntries"),
                let savedEntries = try? JSONDecoder().decode([EyesData].self, from: data) {
-                eyesDataEntries = savedEntries
+                return savedEntries
             }
+            return [] // Return an empty array if no data is found
         }
         struct CenteredButtonStyle: ViewModifier {
             func body(content: Content) -> some View {
