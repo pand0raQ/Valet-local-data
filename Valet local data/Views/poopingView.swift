@@ -51,11 +51,18 @@ struct PoopingView: View {
                 HStack {
                     Spacer()
                     Button("Save") {
-                        poopingData.isDetailed = viewMode == 1
-
-                        PoopingDataManager.shared.savePoopingData(poopingData)
-                        WidgetCenter.shared.reloadAllTimelines()
-                        showingSaveConfirmation = true
+                        if viewMode == 0 { // Normal pooping log
+                               let calendar = Calendar.current
+                               let dateComponents = calendar.dateComponents([.year, .month, .day], from: datePickerDate)
+                               poopingData.lastPoopedDateTime = calendar.date(from: dateComponents)
+                           }
+                           
+                           // Set isDetailed based on the viewMode
+                           poopingData.isDetailed = viewMode == 1
+                           
+                           PoopingDataManager.shared.savePoopingData(poopingData)
+                           WidgetCenter.shared.reloadAllTimelines()
+                           showingSaveConfirmation = true
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.green)

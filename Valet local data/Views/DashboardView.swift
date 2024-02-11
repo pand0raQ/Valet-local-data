@@ -30,51 +30,42 @@ struct DashboardView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 20) {
-                    // Check if any menu item is selected
-                    if !selectedMenuItems.isEmpty {
-                        // Dedicated Grooming Activities Section
-                        if selectedMenuItems.contains("Grooming Log") {
-                            groomingSectionView()
-                        }
-                        
-                        // Other Menu Items excluding Grooming Log
-                        ForEach(filteredMenuItems, id: \.id) { item in
-                            itemView(for: item)
-                        }
-                    } else {
-                        Text("Select items to view details")
-                            .font(.headline)
-                            .padding()
-                    }
-
-                }
-                .navigationTitle("Dashboard")
-                .navigationBarItems(trailing: Button(action: {
-                    showingFilterSheet = true
-                }) {
-                    Image(systemName: "line.3.horizontal.decrease.circle.fill")
-                        .font(.system(size: 28))
-                })
-                .sheet(isPresented: $showingFilterSheet) {
-                    MenuSelectionView(selectedMenuItems: $selectedMenuItems, allMenuItems: allMenuItems)
-                }
-            }
-            .onAppear {
-                // Trigger sortedGroomingActivities computation.
-                print("Accessing Sorted Activities on Appear")
-                
-                let _ = groomingViewModel.sortedGroomingActivities
-            }
-            .onChange(of: selectedMenuItems) { newValue in
-                UserDefaults.standard.set(Array(newValue), forKey: selectedItemsKey)
-            }
-            .onChange(of: selectedView) { newValue in
-                // Handle navigation based on the selected view
-            }
-        }
-     
-          }
+                if selectedMenuItems.contains("Grooming Log") {
+                                groomingSectionView()
+                                    // Apply specific styling here
+                            }
+                            if selectedMenuItems.contains("Medication Log") {
+                                MedicationCardView(medications: $medications)
+                                    // Apply specific styling here
+                            }
+                LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+                               ForEach(filteredMenuItems, id: \.id) { item in
+                                   switch item.title {
+                                   case "Grooming Log", "Medication Log":
+                                       EmptyView() // Exclude these from grid
+                                   default:
+                                       itemView(for: item)
+                                           .frame(height: 195) // Keep a consistent height for squared items
+                                   }
+                               }
+                           }
+                           .padding(.horizontal)
+                       }
+                       .navigationTitle("Dashboard")
+                       .toolbar {
+                           ToolbarItem(placement: .navigationBarTrailing) {
+                               Button(action: { showingFilterSheet = true }) {
+                                   Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                                       .font(.system(size: 28))
+                               }
+                           }
+                       }
+                       .sheet(isPresented: $showingFilterSheet) {
+                           MenuSelectionView(selectedMenuItems: $selectedMenuItems, allMenuItems: allMenuItems)
+                       }
+                   }
+               }
+  
 
     
 
@@ -115,14 +106,23 @@ struct DashboardView: View {
         switch menuItem.title {
         case "Pooping Log":
             PoopingCardView()
+                       .frame(width: 195, height: 195)
+                       .cornerRadius(10)
         case "Vomiting Log":
             VomitingCardView()
+                       .frame(width: 195, height: 195)
+                       .cornerRadius(10)
         case "Appetite Log":
             AppetiteCardView()
+                       .frame(width: 195, height: 195)
+                       .cornerRadius(10)
         case "Medication Log":
             MedicationCardView(medications: $medications)
+                .cornerRadius(10)
         case "Allergies Log":
             AllergiesCardView()
+                       .frame(width: 195, height: 195)
+                       .cornerRadius(10)
         case "Grooming Log":
             ForEach(groomingViewModel.groomingActivities.indices, id: \.self) { index in
                 GroomingCardView(groomingActivity: $groomingViewModel.groomingActivities[index], onComplete: {
@@ -130,6 +130,7 @@ struct DashboardView: View {
                     groomingViewModel.groomingActivities[index].markAsCompleted()
                     // Additional code to handle the completion can be added here.
                 })
+                .cornerRadius(10)
             }
         // ... other cases ...
         default:

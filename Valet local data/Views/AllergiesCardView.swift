@@ -11,63 +11,52 @@ struct AllergiesCardView: View {
     
     
     var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Allergies Summary")
-                        .font(.headline)
-                    
-                    if let rashDate = lastRashDate {
-                        Text("Last Rash: \(rashDate, formatter: dateFormatter)")
-                    } else {
-                        Text("No Rash Data")
-                    }
-                    
-                    if let intensityDate = lastScratchingIntensityDate {
-                        Text("Last Scratching : \(intensityDate, formatter: dateFormatter)")
-                    } else {
-                        Text("No Scratching  Data")
-                    }
-                    
-                    if let eyesDate = lastEyesDate {
-                        Text("Last Eyes Issue: \(eyesDate, formatter: dateFormatter)")
-                    } else {
-                        Text("No Eyes Data")
-                    }
-                }
-                Spacer()
-                Button(action: {
-                    navigateAllergiesCardView = true
-                }) {
-                    Image(systemName: "plus.app.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.green)
-                }
-                .padding(.trailing, 16)
-            }
-            NavigationLink(destination: AllergiesView(), isActive: $navigateAllergiesCardView) {
-                EmptyView()
-            }
-            .padding(.bottom, 8)
-            
-           
-         
-            
-            // Additional content when expanded (if needed)
-         
-        }
-        .onAppear {
-            loadLastEntryDates()
-        }
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(Color.green.opacity(0.3))
-        .foregroundColor(.black)
-        .cornerRadius(10)
-        .padding()
-    }
-    
+          VStack(alignment: .leading) {
+              Text("Allergies Summary")
+                  .font(.headline)
+                  .padding(.bottom)
+              
+              if let rashDate = lastRashDate {
+                  Text("Last Rash: \(rashDate, formatter: dateFormatter)")
+              } else {
+                  Text("No Rash Data")
+              }
+              
+              if let intensityDate = lastScratchingIntensityDate {
+                  Text("Last Scratching: \(intensityDate, formatter: dateFormatter)")
+              } else {
+                  Text("No Scratching Data")
+              }
+              
+              if let eyesDate = lastEyesDate {
+                  Text("Last Eyes Issue: \(eyesDate, formatter: dateFormatter)")
+              } else {
+                  Text("No Eyes Data")
+              }
+
+              Spacer()
+              
+              Button(action: {
+                  navigateAllergiesCardView = true
+              }) {
+                  Image(systemName: "plus.app.fill")
+                      .resizable()
+                      .frame(width: 24, height: 24)
+                      .foregroundColor(.green)
+              }
+              .padding(.trailing, 16)
+          }
+          .onAppear {
+              loadLastEntryDates()
+          }
+          // Adjusting to square size and style
+          .padding()
+          .frame(width: 195, height: 195) // Adjust size to match the other card views
+          .background(Color.green.opacity(0.3))
+          .foregroundColor(.black)
+          .cornerRadius(10)
+          .padding()
+      }
     private func loadLastEntryDates() {
         if let rashData = UserDefaults.standard.data(forKey: "RashDataEntries"),
            let decodedRashData = try? JSONDecoder().decode([RashData].self, from: rashData),

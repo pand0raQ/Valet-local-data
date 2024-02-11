@@ -10,68 +10,47 @@ struct PoopingCardView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                // Left-side content
-                               VStack(alignment: .leading) {
-                                   if let lastPooped = lastPoopingEntry?.lastPoopedDateTime {
-                                       Text("Last 💩: \(lastPooped, formatter: dateFormatter)")
-                                   } else {
-                                       Text("Last 💩: No data saved")
-                                   }
-                                   
-                                   if isExpanded, let entry = lastPoopingEntry {
-                                       Text("Consistency: \(entry.consist.rawValue)")
-                                       Text("Consistency Comment: \(entry.consistComment)")
-                                       Text("Color: \(entry.color)")
-                                   }
-                               }
+            // Title indication for the card
+            Text("Pooping Log")
+                .font(.headline)
+                .padding(.bottom)
 
-                               Spacer()
-
-                // Button to navigate to poopingView
-                Button(action: {
-                    navigateToPoopingView = true
-                }) {
-                    Image(systemName: "plus.app.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.green)
+            VStack(alignment: .leading) {
+                if let lastPooped = lastPoopingEntry?.lastPoopedDateTime {
+                    Text("Last 💩: \(lastPooped, formatter: dateFormatter)")
+                } else {
+                    Text("Last 💩: No data saved")
                 }
-                .padding(.trailing, 16)
+//                // Displaying all information without needing to expand
+//                if let entry = lastPoopingEntry {
+//                    Text("Consistency: \(entry.consist.rawValue)")
+//                    Text("Consistency Comment: \(entry.consistComment)")
+//                    Text("Color: \(entry.color)")
+//                }
             }
-
-            // Button to expand/collapse the card
+            Spacer()
             Button(action: {
-                withAnimation {
-                    isExpanded.toggle()
-                }
+                navigateToPoopingView = true
             }) {
-                Text(isExpanded ? "Show Less" : "Show More")
+                Image(systemName: "plus.app.fill")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.green)
             }
-            .padding(.top, 8)
-
-            // Navigation link (hidden)
-            NavigationLink(destination: PoopingView(), isActive: $navigateToPoopingView) {
-                EmptyView()
-            }
+            .padding(.trailing, 16)
         }
         .onAppear {
-            // Load the most recent pooping entry from UserDefaults when the view appears
             lastPoopingEntry = loadFromUserDefaults()
-            if lastPoopingEntry != nil {
-                print("Loaded data: \(String(describing: lastPoopingEntry))")
-            } else {
-                print("No data found in UserDefaults")
-            }
         }
-        
+        // Adjusting the frame to make the card larger as requested
         .padding()
-        .frame(maxWidth: .infinity)
+        .frame(width: 195, height: 195) // Increased size by 30%
         .background(Color.blue)
         .foregroundColor(.white)
         .cornerRadius(10)
         .padding()
     }
+
 
     private func loadFromUserDefaults() -> PoopingData? {
         // Attempt to fetch the data for the key "PoopingDataArray"

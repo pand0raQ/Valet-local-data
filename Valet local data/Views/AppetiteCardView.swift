@@ -7,42 +7,39 @@ struct AppetiteCardView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                VStack(alignment: .leading) {
-                    // Display last food and water given from the most recent record
-                    if let mostRecentRecord = appetiteRecords.last {
-                        Text("Food given: \(mostRecentRecord.foodAmount) mg")
-                        Text("Brand: \(mostRecentRecord.foodBrand)")
-                        Text("Water given: \(mostRecentRecord.waterIntake) ml")
-                    } else {
-                        Text("No data saved")
-                    }
-                }
+            // Title for the card
+            Text("Appetite Log")
+                .font(.headline)
+                .padding(.bottom)
 
-                Spacer()
+            if let mostRecentRecord = appetiteRecords.last {
+                // Displaying all information upfront
+                Text("Food given: \(mostRecentRecord.foodAmount) mg")
+                Text("Brand: \(mostRecentRecord.foodBrand)")
+                Text("Water given: \(mostRecentRecord.waterIntake) ml")
+            } else {
+                Text("No data saved")
+            }
 
-                // Button to navigate to AppetiteView
-                Button(action: {
-                    navigateToAppetiteView = true
-                }) {
-                    Image(systemName: "plus.app.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.green)
-                }
-                .padding(.trailing, 16)
+            Spacer()
+
+            // Button to navigate to AppetiteView
+            Button(action: {
+                navigateToAppetiteView = true
+            }) {
+                Image(systemName: "plus.app.fill")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.green)
             }
-            
-            // Hidden Navigation Link for navigation to AppetiteView
-            NavigationLink(destination: AppetiteView(), isActive: $navigateToAppetiteView) {
-                EmptyView()
-            }
+            .padding(.trailing, 16)
         }
         .onAppear {
             loadFromUserDefaults()
         }
+        // Making the card square and slightly larger as per the updated requirements
         .padding()
-        .frame(maxWidth: .infinity)
+        .frame(width: 195, height: 195) // Adjusted size to be consistent with the other cards
         .background(Color.blue)
         .foregroundColor(.white)
         .cornerRadius(10)

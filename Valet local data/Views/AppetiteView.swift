@@ -17,6 +17,7 @@ struct AppetiteView: View {
                     TextField("Amount of Water (ml)", text: $appetiteRecord.waterIntake)
                 }
                 
+                
                 HStack {
                     Spacer()
                     Button("Save") {
@@ -65,8 +66,3 @@ struct AppetiteView: View {
     }
 }
 
-struct AppetiteView_Previews: PreviewProvider {
-    static var previews: some View {
-        AppetiteView()
-    }
-}

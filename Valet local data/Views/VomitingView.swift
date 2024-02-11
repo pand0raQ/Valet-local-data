@@ -12,70 +12,74 @@ struct VomitingView: View {
     @State private var showingSaveAlert = false
     @State private var saveAlertMessage = ""
     @State private var vomitingData = VomitingData(lastVomitDateTime: Date() )
+    @State private var viewMode = 0 // 0 for Normal, 1 for Detailed
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack {
-                    DatePicker("", selection: $vomitingData.lastVomitDateTime, displayedComponents: [.date, .hourAndMinute])
-                        .datePickerStyle(WheelDatePickerStyle())
-                        .padding()
-                        .onAppear { print("DatePicker appeared") }
-                        .onDisappear { print("DatePicker disappeared") }
+                 ScrollView {
+                     VStack {
+                        
 
-                    if let displayImage = displayImage {
-                        displayImage
-                            .resizable()
-                            .scaledToFit()
-                            .onAppear { print("Display Image appeared") }
-                            .onDisappear { print("Display Image disappeared") }
-                    } else {
-                        HStack {
-                            Button("Take Picture") {
-                                self.sourceType = .camera
-                                self.showingImagePicker = true
-                                print("Take Picture button tapped")
-                            }
-                            .padding()
-                            .buttonStyle(.bordered)
+                         // Conditionally display DatePicker based on viewMode
+                         if viewMode == 0 || viewMode == 1 {
+                             DatePicker("", selection: $vomitingData.lastVomitDateTime, displayedComponents: [.date, .hourAndMinute])
+                                 .datePickerStyle(WheelDatePickerStyle())
+                                 .padding()
+                         }
+                         // Picker for selecting view mode
+                         Picker("View Mode", selection: $viewMode) {
+                             Text("Normal").tag(0)
+                             Text("Detailed").tag(1)
+                         }
+                         .pickerStyle(SegmentedPickerStyle())
+                         .padding(.vertical)
 
-                            Button("Select Picture") {
-                                self.sourceType = .photoLibrary
-                                self.showingImagePicker = true
-                                print("Select Picture button tapped")
-                            }
-                            .padding()
-                            .buttonStyle(.bordered)
-                        }
-                    }
+                         // Additional UI for Detailed mode
+                         if viewMode == 1 {
+                             if let displayImage = displayImage {
+                                 displayImage
+                                     .resizable()
+                                     .scaledToFit()
+                             } else {
+                                 HStack {
+                                     Button("Take Picture") {
+                                         self.sourceType = .camera
+                                         self.showingImagePicker = true
+                                     }
+                                     .padding()
+                                     .buttonStyle(.bordered)
 
-                    Button("Save") {
-                        saveData()
-                        print("Save button tapped")
-                    }
-                    .padding()
-                    .buttonStyle(.borderedProminent)
-                    .tint(.green)
-                }
-            }
-            .navigationTitle("Vomiting Log")
-            .navigationBarTitleDisplayMode(.inline)
-            .onAppear { print("VomitingView appeared") }
-            .onDisappear { print("VomitingView disappeared") }
-            .sheet(isPresented: $showingImagePicker, onDismiss: {
-                loadImage()
-                print("ImagePicker is dismissed")
-            }) {
-                ImagePicker(sourceType: self.sourceType, image: self.$inputImage, onDismiss: {
-                        self.showingImagePicker = false  // Set the state to false when the picker is dismissed
-                        print("Custom onDismiss closure called")
-                    })
-                }
-            }
-            .alert(isPresented: $showingSaveAlert) {
-                Alert(title: Text("Save Status"), message: Text(saveAlertMessage), dismissButton: .default(Text("OK")))
-            }
-        }
+                                     Button("Select Picture") {
+                                         self.sourceType = .photoLibrary
+                                         self.showingImagePicker = true
+                                     }
+                                     .padding()
+                                     .buttonStyle(.bordered)
+                                 }
+                             }
+                         }
+
+                         // Save button remains visible for both views
+                         Button("Save") {
+                             saveData()
+                         }
+                         .padding()
+                         .buttonStyle(.borderedProminent)
+                         .tint(.green)
+                     }
+                 }
+                 .navigationTitle("Vomiting Log")
+                 .navigationBarTitleDisplayMode(.inline)
+                 .sheet(isPresented: $showingImagePicker, onDismiss: loadImage) {
+                     ImagePicker(sourceType: self.sourceType, image: self.$inputImage) {
+                         self.showingImagePicker = false
+                     }
+                 }
+                 .alert(isPresented: $showingSaveAlert) {
+                     Alert(title: Text("Save Status"), message: Text(saveAlertMessage), dismissButton: .default(Text("OK")))
+                 }
+             }
+         }
 
     private func saveData() {
         // Attempt to save image data if available
@@ -132,9 +136,5 @@ struct VomitingView: View {
     }
 }
 
-struct VomitingView_Previews: PreviewProvider {
-    static var previews: some View {
-        VomitingView()
-    }
-}
+
 

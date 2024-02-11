@@ -2,68 +2,50 @@
 import SwiftUI
 
 struct VomitingCardView: View {
-    @State private var isExpanded = false
-    @State private var lastVomitingEntry:VomitingData?
+    @State private var lastVomitingEntry: VomitingData?
     @State private var navigateToVomitingView = false  // State to control navigation
     
-    
     var body: some View {
-        VStack (alignment: .leading) {
-            HStack {
-                // Display last vomit date and time
-                VStack(alignment: .leading) {
-                    if let entry = lastVomitingEntry {
-                        Text("Last🤮 : \(entry.lastVomitDateTime, formatter: dateFormatter)")
-                    } else {
-                        Text("No data saved")
-                    }
+        VStack(alignment: .leading) {
+            // Title indication for the card
+            Text("Vomiting Log")
+                .font(.headline)
+                .padding(.bottom)
+            
+            VStack(alignment: .leading) {
+                if let entry = lastVomitingEntry {
+                    Text("Last🤮: \(entry.lastVomitDateTime, formatter: dateFormatter)")
+                    // Displaying all information without needing to expand
+                    NavigationLink("View Saved Picture", destination: VomitingImageView())
+                } else {
+                    Text("No data saved")
                 }
-                
-                Spacer()
-                
-                // Button to navigate to VomitingView
-                Button(action: {
-                    navigateToVomitingView = true
-                }) {
-                    Image(systemName: "plus.app.fill")
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.green)
-                }
-                .padding(.trailing, 16)
             }
             
-            // Button to expand/collapse the card
+            Spacer()
+            
+            // Button to navigate to VomitingView
             Button(action: {
-                withAnimation {
-                    isExpanded.toggle()
-                }
+                navigateToVomitingView = true
             }) {
-                Text(isExpanded ? "Show Less" : "Show More")
+                Image(systemName: "plus.app.fill")
+                    .resizable()
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.green)
             }
-            .padding(.top, 8)
-            
-            // Expanded state: Link to view saved picture
-            if isExpanded {
-                NavigationLink("View Saved Picture", destination: VomitingImageView())
-            }
-            
-            // Hidden Navigation Link for navigation to VomitingView
-            NavigationLink(destination: VomitingView(), isActive: $navigateToVomitingView) {
-                EmptyView()
-            }
+            .padding(.trailing, 16)
         }
         .onAppear {
             lastVomitingEntry = loadFromUserDefaults()
         }
+        // Adjusting the frame to make the card a larger square
         .padding()
-        .frame(maxWidth: .infinity)
+        .frame(width: 195, height: 195) // Adjust size by 30% from original proposal
         .background(Color.blue)
         .foregroundColor(.white)
         .cornerRadius(10)
         .padding()
     }
-    
 
     private func loadFromUserDefaults() -> VomitingData? {
         guard let savedData = UserDefaults.standard.data(forKey: "VomitingDataArray") else { return nil }
